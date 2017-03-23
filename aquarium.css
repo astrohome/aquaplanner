@@ -1,0 +1,138 @@
+      body {
+         margin: 0px;
+         padding: 0px;
+      }
+       
+	   .header0 {width:100%;text-align:left;}
+	   
+	   .container {
+                width: 100%;
+                min-height: 480px;
+                padding: 0px;
+                border-collapse: collapse;
+      }
+	  
+	  .container .sidenav {
+                width: 250px;
+				background-color:#D0D0D0;
+				height:500px;
+				padding-top:0px;
+				padding-bottom:0px;
+				
+				/*line-height:10px;*/
+				
+      }
+	  .container .sidenav a{
+		  display: block;
+	      margin:15px;
+          background-color:#282828;
+          color: white;
+          padding: 7px;
+          text-align: center;
+		  text-decoration: none;
+          border-radius: 5px 5px 5px 5px;
+		 /* width:80%;*/
+      }	
+	  .container .sidenav a:hover{
+          background-color:#FF6600;
+      }	
+	  .container .sidenav ul{
+         list-style-type:none;
+		 padding:0px;
+		 margin:0px;
+      }		  
+	  .container .header {
+                color:white;
+				height:75px;
+				background-color:#282828;
+				font-size:50px;
+				padding:5px;
+      }
+	  .container .urlInp {
+                height:40px;
+				background-color:#282828;
+				padding-right:15px;
+				padding-left:10px;
+				
+      }
+	  .container .screen {
+                background-color:#EAEAEA;
+				/*width:80%;*/
+				height:500px;
+				padding:10px;
+	  }	  
+	  .container .footer {
+                background-color:#282828;
+				height:25px;
+      }
+	  .container .statusString {
+                background-color:#B0B0B0;
+				/*display:none;*/
+				/*margin-left:10px;*/
+				color:black;
+				
+				/*height:15px;*/
+      }	  
+
+	  .container .screen .w3-tab div{display:none}
+      .container .screen .w3-tab div:target{display:block}
+	 /* 
+	  #taskTable tr:hover td{
+		  background-color: black;
+		  color:white;
+	  }
+	  */
+	  .container .screen .scrTab {
+                width:100%;
+			    /*border:1px solid grey;*/
+				border-collapse:collapse;
+				margin-bottom:10px;
+			 }
+	  .container .screen .scrTab td {
+                font-size:1.5em;
+				padding:5px;
+				text-align:center;				
+				width:2000px;
+			 }
+	  .container .screen .scrTab th{
+               /* font-size:1.5em;*/
+				padding:5px;
+				text-align:center;				
+				width:2000px;
+			 }			 
+	 
+	   .container .screen .scrTab  tr:nth-child(even) {
+				padding:5px;
+				text-align:center;
+				background-color: #fff;
+			 }
+	   .container .screen .scrTab    tr:nth-child(odd) {
+				padding:5px;
+				text-align:center;				
+				background-color: #d0d0d0;
+			 }	    
+	   
+	   .container .screen .scrTab    .br{
+				border-right: 4px solid #ffffff;
+			 }	    		
+		
+	/*	.container .screen .scrTab   th{
+				padding:5px;
+				text-align:center;
+				background-color: #e0e0e0;
+			 }
+    */
+		.container .screen section{
+			    min-height: 20px;
+				/*display: table-cell;*/
+				padding-bottom:10px;
+				padding-top:10px;
+				padding-left:5px;
+		}
+        .inEditTbl{
+			width:100%;
+			text-align:center;
+			font-size:1em;
+			font-family:"Times";
+		}
+		
