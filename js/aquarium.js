@@ -74,7 +74,7 @@ function setKnobsTable() {
     var pattern = /^(Х|\*|П)$/;
 
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-        var cell = table.rows[1].cells[i].childNodes[1].value;
+        var cell = table.rows[1].cells[i].childNodes[1].childNodes[0].value;
         if (!pattern.test(cell)) {
             alert("Статус кнопки " + table.rows[0].cells[i].innerHTML + " введен неверно. (*,Х,П)");
             return;
@@ -128,7 +128,7 @@ function setFanTable() {
     var string = "";
 
     var table = document.getElementById('editFan');
-    string = table.rows[1].cells[0].childNodes[1].value;
+    string = table.rows[1].cells[0].childNodes[1].childNodes[0].value;
     if (!pattern[0].test(string)) {
         alert("Мощность введена неверно. (0-99)");
         return;
@@ -148,18 +148,15 @@ function setFanTable() {
         }
     }
     xmlHttpPostRequest(cellData, 'stfn');
-    //xmlHttpRequest('POST',cellData,cellDataR,'stfn');
 }
 
 function getFanTable(cellDataR) {
 
-    //var cellDataR=["",""];
     var table = document.getElementById('editFan');
 
-    //xmlHttpRequest('GET',null,cellDataR,'gtfn');
-    table.rows[1].cells[0].childNodes[1].value = ' ';
+    table.rows[1].cells[0].childNodes[1].childNodes[0].value = ' ';
     if (!isNaN(cellDataR[0])) {
-        table.rows[1].cells[0].childNodes[1].value = cellDataR[0];
+        table.rows[1].cells[0].childNodes[1].childNodes[0].value = cellDataR[0];
     }
 
     table.rows[1].cells[1].childNodes[1].value = ' ';
@@ -182,15 +179,8 @@ function searchTSReq(task) {
     for (var i = 0; i < 2; i++) {
         obj.push('\xa0');
     }
+
     $('#loading').modal({backdrop: 'static'});
-    switch (task) {
-        case "tsrc":
-            document.getElementById("menuList").style.visibility = "hidden";
-            break;
-        case "tstp":
-            document.getElementById("menuList").style.visibility = "visible";
-            break;
-    }
 
     xmlhttp.onload = function() {
         if (task == 'tsrc') {
@@ -228,12 +218,10 @@ function testLedsReq(task) {
         case "gttb":
             document.getElementById("endLedTestBtn").disabled = false;
             document.getElementById("beginLedTestBtn").disabled = true;
-            document.getElementById("menuList").style.visibility = "hidden";
             break;
         case "gtte":
             document.getElementById("endLedTestBtn").disabled = true;
             document.getElementById("beginLedTestBtn").disabled = false;
-            document.getElementById("menuList").style.visibility = "visible";
             break;
     }
 
@@ -260,7 +248,6 @@ function calibrPhReq(task) {
 
     switch (task) {
         case "cphb":
-            document.getElementById("menuList").style.visibility = "hidden";
             document.getElementById("rdyPh4Btn").disabled = false;
             break;
         case "cph4":
@@ -271,7 +258,6 @@ function calibrPhReq(task) {
             document.getElementById("rdyPh7Btn").disabled = true;
             break;
         case "cphe":
-            document.getElementById("menuList").style.visibility = "visible";
             break;
 
     }
@@ -302,12 +288,12 @@ function setMoonLightTable() {
     //var messageName = "dfan";
     var table = document.getElementById('moonLightTable');
     //var pattern = /(^[0-9]$)|(^[0-9][0-9]$)/;
-    cellData[0] = table.rows[1].cells[0].childNodes[1].value;
+    cellData[0] = table.rows[1].cells[0].childNodes[1].childNodes[0].value;
     if (!pattern[0].test(cellData[0])) {
         alert("Время ВКЛ введено неверно. (ЧЧ:ММ)");
         return;
     }
-    cellData[1] = table.rows[1].cells[1].childNodes[1].value;
+    cellData[1] = table.rows[1].cells[1].childNodes[1].childNodes[0].value;
     if (!pattern[0].test(cellData[1])) {
         alert("Время ВЫКЛ введено неверно. (ЧЧ:ММ)");
         return;
@@ -335,12 +321,10 @@ function setMoonLightTable() {
 
 function getMoonLightTable(cellDataR) {
     var cellData = ["", "", "", ];
-    //var reqData=[,,,,];
-    //var cellDataR=[];
+
     var table = document.getElementById('moonLightTable');
-    //xmlHttpRequest('GET',null,reqData,'gtml');
+
     if (!isNaN(cellDataR[0])) {
-        //cellData[0]=cellDataR[0]+":";
         if (cellDataR[0] < 9) {
             cellData[0] = "0" + cellDataR[0] + ":";
         } else {
@@ -362,12 +346,10 @@ function getMoonLightTable(cellDataR) {
         } else {
             cellData[1] += cellDataR[3];
         }
-        //cellData[0]=cellDataR[0] +":"+cellDataR[1];
-        //cellData[1]=cellDataR[2] +":"+cellDataR[3];
 
     }
-    table.rows[1].cells[0].childNodes[1].value = cellData[0];
-    table.rows[1].cells[1].childNodes[1].value = cellData[1];
+    table.rows[1].cells[0].childNodes[1].childNodes[0].value = cellData[0];
+    table.rows[1].cells[1].childNodes[1].childNodes[0].value = cellData[1];
 
     if (cellDataR[4] == 1) {
         cellData[2] = "*";
@@ -397,7 +379,6 @@ function timeSeing() {
 
 function setDate() {
     var cellData = [];
-    //var cellDataR=[];
     var dat = new Date();
     cellData.push(dat.getDay());
     cellData.push(dat.getHours());
@@ -405,23 +386,17 @@ function setDate() {
     cellData.push(dat.getDate());
     cellData.push(dat.getMonth() + 1);
     cellData.push(dat.getFullYear() - 2000);
-    //console.log(cellData);
-    //xmlHttpRequest('POST',cellData,cellDataR,'stdt');
     xmlHttpPostRequest(cellData, 'stdt');
 }
 //*****************************************************************************
 
 //SHOW DISPLAY*****************************************************************
-function getDisplay(cellDataR) { //24 el
-    //var cellDataR=[];
+function getDisplay(cellDataR) {
+
     var table1 = document.getElementById("displTable1");
     var table2 = document.getElementById("displTable2");
     var table3 = document.getElementById("displTable3");
-    //for(var i=0;i<24;i++){
-    //	cellDataR.push('\xa0');
-    //}
 
-    //xmlHttpGetRequest('gtdl',getDisplay);
     for (var i = 0; i < 12; i++) {
         var tableCell = table1.rows[1].cells[i];
         switch (i) {
@@ -472,7 +447,6 @@ function getDisplay(cellDataR) { //24 el
             table3.rows[1].cells[i].innerHTML = cellDataR[i + 18]; //0...5
         }
     }
-    // console.log(cellDataR);
 }
 
 var timerXhrTask;
@@ -601,7 +575,6 @@ function populateTable(table, rows, cells, content) {
     var header = table.createTHead();
     var rowh = header.insertRow(0);
     for (var i = 0; i < cells; ++i) {
-        //rowh.appendChild(document.createElement('th'));
         var cell = rowh.insertCell(i);
         cell.outerHTML ="<th>" + taskTableHdr[i] + "</th>";
     }
@@ -647,7 +620,7 @@ function addRow(tableID, rowNumber, content) {
 
     var rowCount = table.rows.length;
     var cellCount = table.rows[0].cells.length;
-    //console.log(cellCount,rowNumber,rowCount);
+
     if (rowCount >= 100) {
         return;
     }
@@ -655,7 +628,6 @@ function addRow(tableID, rowNumber, content) {
     row.onclick = function() {
         rowIndexTaskTable = this.rowIndex;
 
-        //if(rowIndexTaskTable!=clickIndexRow){
         if (clickIndexRow != 0) {
             if (clickIndexRow % 2 != 0) {
                 table.rows[clickIndexRow].style.backgroundColor = "#fff";
@@ -665,7 +637,7 @@ function addRow(tableID, rowNumber, content) {
                 table.rows[clickIndexRow].style.color = "black";
             }
         }
-        //}
+
         this.style.backgroundColor = "black";
         this.style.color = "white";
         clickIndexRow = this.rowIndex;
@@ -695,7 +667,6 @@ function addRow(tableID, rowNumber, content) {
         }
     }
     rowIndexTaskTable = rowCount;
-    //console.log(taskTableTxt);
 }
 
 //DELETE ROW FROM TASKTABLE********************************************************
@@ -727,22 +698,12 @@ function delRow(tableId, row) {
         }
 
         if (clickIndexRow >= table.rows.length) {
-            //if(clickIndexRow%2!=0){
-            //   table.rows[clickIndexRow].style.backgroundColor="#fff";
-            //   table.rows[clickIndexRow].style.color="black";
-            //}
-            //else{
-            //   table.rows[clickIndexRow].style.backgroundColor="#d0d0d0";
-            //   table.rows[clickIndexRow].style.color="black";
-            //}
             clickIndexRow = 0;
         }
 
         for (var i = 0; i < cellCount; i++) {
             tableEdit.rows[1].cells[i].childNodes[1].childNodes[0].value = table.rows[row].cells[i].innerHTML;
         }
-
-        // clickIndexRow=0;
     }
 
 }
@@ -774,8 +735,6 @@ function populateEditorTable(table, rows, cells, content) {
             var elTd = document.createElement('td');
             elTd.appendChild(elInput);
             row.appendChild(elTd);
-            //var text = "  ";
-            //row.cells[j].appendChild(document.createTextNode(text));
         }
         table.appendChild(row);
     }
@@ -791,7 +750,7 @@ function editRow(tableID, cells, content) {
         alert("Ошибка: Невыбрана Задача.");
         return;
     }
-    switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].value) {
+    switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].childNodes[0].value) {
         case "ТО":
         case "ТС":
         case "ТМ":
@@ -806,7 +765,7 @@ function editRow(tableID, cells, content) {
             alert("Ошибка: Неверно введена Функция");
             return;
     }
-    switch (tableEdit.rows[1].cells[TASKTABLE.OUT].childNodes[1].value) {
+    switch (tableEdit.rows[1].cells[TASKTABLE.OUT].childNodes[1].childNodes[0].value) {
         case "Р1":
         case "Р2":
         case "Р3":
@@ -828,7 +787,7 @@ function editRow(tableID, cells, content) {
             return;
     }
 
-    switch (tableEdit.rows[1].cells[TASKTABLE.OUT].childNodes[1].value) {
+    switch (tableEdit.rows[1].cells[TASKTABLE.OUT].childNodes[1].childNodes[0].value) {
         case "Р1":
         case "Р2":
         case "Р3":
@@ -838,8 +797,8 @@ function editRow(tableID, cells, content) {
         case "Р7":
         case "Р8":
         case "ВР":
-            tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].value = '';
-            tableEdit.rows[1].cells[TASKTABLE.PWMOFF].childNodes[1].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].childNodes[0].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.PWMOFF].childNodes[1].childNodes[0].value = '';
             break;
 
         case "С1":
@@ -848,7 +807,7 @@ function editRow(tableID, cells, content) {
         case "С4":
         case "С5":
         case "С6":
-            switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].value) {
+            switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].childNodes[0].value) {
                 case "УВ":
                 case "НТ":
                 case "ОТ":
@@ -857,97 +816,97 @@ function editRow(tableID, cells, content) {
                     return;
                     break;
             }
-            var pwmS = parseInt(tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].value);
+            var pwmS = parseInt(tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].childNodes[0].value);
             if (pwmS < 0 || pwmS > 99 || isNaN(pwmS)) {
                 alert("Ошибка: Ярк.Вкл вне диапазона");
                 return;
             }
-            var pwmE = parseInt(tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].value);
+            var pwmE = parseInt(tableEdit.rows[1].cells[TASKTABLE.PWMON].childNodes[1].childNodes[0].value);
             if (pwmE < 0 || pwmE > 99 || isNaN(pwmE)) {
                 alert("Ошибка: Ярк.Выкл вне диапазона");
                 return;
             }
-            tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].value = '';
-            tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].childNodes[0].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].childNodes[0].value = '';
             break;
     }
 
-    switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].value) {
+    switch (tableEdit.rows[1].cells[TASKTABLE.FUNCTION].childNodes[1].childNodes[0].value) {
         case "ТС":
             {
-                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].value;
+                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].childNodes[0].value;
                 var pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Вкл введена неверно. (ЧЧ:ММ)");
                     return;
                 }
-                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
                 pattern = /^[0-9][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Выкл введена неверно. (СС)");
                     return;
                 }
-                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].value = '';
-                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].childNodes[0].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].childNodes[0].value = '';
             }
             break;
         case "ТМ":
             {
-                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].value;
+                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].childNodes[0].value;
                 var pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Вкл введена неверно. (ЧЧ:ММ)");
                     return;
                 }
-                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
                 pattern = /^[0-9][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Выкл введена неверно. (MM)");
                     return;
                 }
-                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].value = '';
-                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].childNodes[0].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].childNodes[0].value = '';
             }
             break;
         case "ТО":
-            var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].value;
+            var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].childNodes[0].value;
             var pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
             if (!pattern.test(date)) {
                 alert("Дата Вкл введена неверно. (ЧЧ:ММ)");
                 return;
             }
-            date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+            date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
             pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
             if (!pattern.test(date)) {
                 alert("Дата Выкл введена неверно. (ЧЧ:MM)");
                 return;
             }
             //tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[0].value = '';
-            tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].value = '';
-            tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].childNodes[0].value = '';
+            tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].childNodes[0].value = '';
             //console.log(tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes);
             break;
         case "ТН":
             {
-                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].value;
+                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].childNodes[0].value;
                 var pattern = /^(ПН |ВТ |СР |ЧТ |ПТ |СБ |ВС )?([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Вкл введена неверно. (ДН ЧЧ:ММ)");
                     return;
                 }
-                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
                 pattern = /^[0-9][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Выкл введена неверно. (СС)");
                     return;
                 }
-                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].value = '';
-                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.INPUT].childNodes[1].childNodes[0].value = '';
+                tableEdit.rows[1].cells[TASKTABLE.TRESH].childNodes[1].childNodes[0].value = '';
             }
             break;
         case "ЦВ":
             {
-                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].value;
+                var date = tableEdit.rows[1].cells[TASKTABLE.TIMEON].childNodes[1].childNodes[0].value;
                 var pattern = /^[0-9][0-9]$/;
 
                 if (!pattern.test(date)) {
@@ -955,7 +914,7 @@ function editRow(tableID, cells, content) {
                     return;
                 }
                 var dateOn = parseInt(date);
-                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+                date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
                 pattern = /^[0-9][0-9]$/;
                 if (!pattern.test(date)) {
                     alert("Дата Выкл введена неверно. (СС 00-99)");
@@ -1008,7 +967,7 @@ function editRow(tableID, cells, content) {
             }
             break;
         case "УВ":
-            var date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].value;
+            var date = tableEdit.rows[1].cells[TASKTABLE.TIMEOFF].childNodes[1].childNodes[0].value;
             var pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
             if (!pattern.test(date)) {
                 alert("Дата Выкл введена неверно. (ЧЧ:ММ)");
@@ -1031,8 +990,8 @@ function editRow(tableID, cells, content) {
     }
 
     for (var j = 0; j < cells; j++) {
-        table.rows[rowIndexTaskTable].cells[j].innerHTML = tableEdit.rows[1].cells[j].childNodes[1].value;
-        //content[rowIndexTaskTable - 1][j] = tableEdit.rows[1].cells[j].childNodes[1].value;
+        table.rows[rowIndexTaskTable].cells[j].innerHTML = tableEdit.rows[1].cells[j].childNodes[1].childNodes[0].value;
+        //content[rowIndexTaskTable - 1][j] = tableEdit.rows[1].cells[j].childNodes[1].childNodes[0].value;
     }
 
     //console.log(taskTableTxt);
@@ -1674,9 +1633,9 @@ function editOnOff(item) {
     //item.value="";
     var string = "";
     var cldrTable = document.getElementById("calendar_tt");
-    var dow = cldrTable.rows[1].cells[0].childNodes[1].value;
-    var hours = cldrTable.rows[1].cells[1].childNodes[1].value;
-    var minutes = cldrTable.rows[1].cells[2].childNodes[1].value;
+    var dow = cldrTable.rows[1].cells[0].childNodes[1].childNodes[0].value;
+    var hours = cldrTable.rows[1].cells[1].childNodes[1].childNodes[0].value;
+    var minutes = cldrTable.rows[1].cells[2].childNodes[1].childNodes[0].value;
 
     var patt_minutes_seconds = /(^[0-9][0-9]$)/;
     var patt_hours = /(^([0-1][0-9]|2[0-3]):[0-5][0-9]$)/;
