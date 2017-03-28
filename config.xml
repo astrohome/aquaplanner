@@ -11,6 +11,9 @@
 
   <platform name="android" />
 
+  <preference name="permissions"                value="none"/>
+  <preference name="orientation"                value="landscape" />
+
   <description>
       App to interact with Aquaplanner.net WiFi enabled controller.
   </description>
