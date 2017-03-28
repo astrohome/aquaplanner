@@ -31,61 +31,150 @@
     <script src="aquarium.js"></script>
 </head>
 
-<body onload="taskTableBtnInit()">
+<body>
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">AQUPLANNER NET</a>
-    </div>
-  </div>
-</nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">AQUPLANNER NET</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container-fluid">
 
-      <div class="row">
+        <div class="row">
 
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-              <li class="nav-header" id="d_1" onclick="xhrTimer(this)"><a href="#display"><i class="fa fa-dashboard fa-lg"></i> Статус</a></li>
-              <li class="nav-header" id="k_2" onclick="xhrTimer(this)"><a href="#knobs"><i class="fa fa-toggle-on" aria-hidden="true"></i> Кнопки</a></li>
-              <li class="nav-header" id="t_3" onclick="xhrTimer(this)"><a href="#tasks"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Настройка Задач</a></li>
-              <li class="nav-header" id="d_4" onclick="xhrTimer(this)"><a href="#date"><i class="fa fa-calendar" aria-hidden="true"></i> Настройка Даты</a></li>
-              <li class="nav-header" id="f_5" onclick="xhrTimer(this)"><a href="#fan"><i class="fa fa-fan" aria-hidden="true"></i> Настройка Вентиллятора</a></li>
-              <li class="nav-header" id="m_5" onclick="xhrTimer(this)"><a href="#moon"><i class="fa fa-moon-o" aria-hidden="true"></i> Настройка Лунного Света</a></li>
-              <li class="nav-header" id="t_6" onclick="xhrTimer(this)"><a href="#termod"><i class="fa fa-thermometer-half" aria-hidden="true"></i> Настройка Термодатчиков</a></li>
-              <li class="nav-header" id="h_7" onclick="xhrTimer(this)"><a href="#calibPh"><i class="fa fa-check-circle" aria-hidden="true"></i> Калибровка pH</a></li>
-              <li class="nav-header" id="t_8" onclick="xhrTimer(this)"><a href="#test"><i class="fa fa-play" aria-hidden="true"></i> Тест Подсветки</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <table class="container">
-            <tr>
-                <th class="header" colspan="2">AQUAPLANNER NET</th>
-            </tr>
-            <tr>
-                <td colspan="2" class="urlInp">
-                    <!-- <input type="url" id="InpUrl" style="width:100%" value="http://" autocomplete="on">-->
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="nav-header" id="d_1" onclick="xhrTimer(this)"><a href="#display"><i class="fa fa-dashboard fa-lg"></i> Статус</a></li>
+                    <li class="nav-header" id="k_2" onclick="xhrTimer(this)"><a href="#knobs"><i class="fa fa-toggle-on" aria-hidden="true"></i> Кнопки</a></li>
+                    <li class="nav-header" id="t_3" onclick="xhrTimer(this)"><a href="#tasks"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Настройка Задач</a></li>
+                    <li class="nav-header" id="d_4" onclick="xhrTimer(this)"><a href="#date"><i class="fa fa-calendar" aria-hidden="true"></i> Настройка Даты</a></li>
+                    <li class="nav-header" id="f_5" onclick="xhrTimer(this)"><a href="#fan"><i class="fa fa-fan" aria-hidden="true"></i> Настройка Вентиллятора</a></li>
+                    <li class="nav-header" id="m_5" onclick="xhrTimer(this)"><a href="#moon"><i class="fa fa-moon-o" aria-hidden="true"></i> Настройка Лунного Света</a></li>
+                    <li class="nav-header" id="t_6" onclick="xhrTimer(this)"><a href="#termod"><i class="fa fa-thermometer-half" aria-hidden="true"></i> Настройка Термодатчиков</a></li>
+                    <li class="nav-header" id="h_7" onclick="xhrTimer(this)"><a href="#calibPh"><i class="fa fa-check-circle" aria-hidden="true"></i> Калибровка pH</a></li>
+                    <li class="nav-header" id="t_8" onclick="xhrTimer(this)"><a href="#test"><i class="fa fa-play" aria-hidden="true"></i> Тест Подсветки</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="config">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Настройка</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="usr">URL:</label>
+                                <input type="url" class="form-control" id="InpUrl" style="width:100%;" value="http://" onkeyup="saveLastUrl()">
+                            </div>
 
-                    <input type="url" id="InpUrl" style="width:100%;" value="http://" onkeyup="saveLastUrl()">
-
-                </td>
-            </tr>
-            <tr>
-                <td class="sidenav">
-
-                </td>
-                <td class="screen">
-                    <div class="w3-tab">
-
-                        <div id="display">
-                            <header class="header0">
-                                <h1>Дисплей</h1></header>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="display">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Статус</h2>
+                        </div>
+                        <div class="panel-body">
                             <table id="displTable1" class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>pH</th>
+                                        <th>t1</th>
+                                        <th>t2</th>
+                                        <th>PЕЛЕ 8</th>
+                                        <th>PЕЛЕ 7</th>
+                                        <th>PЕЛЕ 6</th>
+                                        <th>PЕЛЕ 5</th>
+                                        <th>PЕЛЕ 4</th>
+                                        <th>PЕЛЕ 3</th>
+                                        <th>PЕЛЕ 2</th>
+                                        <th>PЕЛЕ 1</th>
+                                        <th>FAN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="ph">&nbsp;</td>
+                                        <td id="t1">&nbsp;</td>
+                                        <td id="t2">&nbsp;</td>
+                                        <td id="r8">&nbsp;</td>
+                                        <td id="r7">&nbsp;</td>
+                                        <td id="r6">&nbsp;</td>
+                                        <td id="r5">&nbsp;</td>
+                                        <td id="r4">&nbsp;</td>
+                                        <td id="r3">&nbsp;</td>
+                                        <td id="r2">&nbsp;</td>
+                                        <td id="r1">&nbsp;</td>
+                                        <td id="fn">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table id="displTable2" class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>LED 1</th>
+                                        <th>LED 2</th>
+                                        <th>LED 3</th>
+                                        <th>LED 4</th>
+                                        <th>LED 5</th>
+                                        <th>LED 6</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="c1">&nbsp;</td>
+                                        <td id="c2">&nbsp;</td>
+                                        <td id="c3">&nbsp;</td>
+                                        <td id="c4">&nbsp;</td>
+                                        <td id="c5">&nbsp;</td>
+                                        <td id="c6">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table id="displTable3" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ДЕНЬ НЕДЕЛИ</th>
+                                        <th>ЧАСЫ</th>
+                                        <th>МИНУТЫ</th>
+                                        <th>ДЕНЬ</th>
+                                        <th>МЕСЯЦ</th>
+                                        <th>ГОД</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="d1">&nbsp;</td>
+                                        <td id="d2">&nbsp;</td>
+                                        <td id="d3">&nbsp;</td>
+                                        <td id="d4">&nbsp;</td>
+                                        <td id="d5">&nbsp;</td>
+                                        <td id="d6">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="button" class="btn btn-primary" id="btnDispl" value="Обновить" onclick="xmlHttpGetRequest('gtdl',getDisplay)" autocomplete="off">
+                            <br />
+                            <span>Для обновления данных c интервалом в 30 сек. выберите </span>
+                            <input type="checkbox" id="GetDisplCheck" onclick="getDisplTimer()" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="knobs">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Кнопки</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered " id="knobsEditTable">
                                 <tr>
-                                    <th>pH</th>
-                                    <th>t1</th>
-                                    <th>t2</th>
+                                    <th>LED</th>
                                     <th>PЕЛЕ 8</th>
                                     <th>PЕЛЕ 7</th>
                                     <th>PЕЛЕ 6</th>
@@ -94,447 +183,382 @@
                                     <th>PЕЛЕ 3</th>
                                     <th>PЕЛЕ 2</th>
                                     <th>PЕЛЕ 1</th>
-                                    <th>FAN</th>
                                 </tr>
                                 <tr>
-                                    <td id="ph">&nbsp;</td>
-                                    <td id="t1">&nbsp;</td>
-                                    <td id="t2">&nbsp;</td>
-                                    <td id="r8">&nbsp;</td>
-                                    <td id="r7">&nbsp;</td>
-                                    <td id="r6">&nbsp;</td>
-                                    <td id="r5">&nbsp;</td>
-                                    <td id="r4">&nbsp;</td>
-                                    <td id="r3">&nbsp;</td>
-                                    <td id="r2">&nbsp;</td>
-                                    <td id="r1">&nbsp;</td>
-                                    <td id="fn">&nbsp;</td>
+                                    <td>
+                                        <select class="form-control" style="color:green;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="font-family:Arial, FontAwesome; color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">&#xf011;</option>
+                                               <option value="*" style="color:green;">&#xf011;</option>
+                                               <option value="П" style="color:blue;">&#xf00d;</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                               <option value="Х" style="color:red;">X</option>
+                                               <option value="*" style="color:green;">*</option>
+                                               <option value="П" style="color:blue;">П</option>
+                                        </select>
+                                    </td>
                                 </tr>
                             </table>
-                            <table id="displTable2" class="table table-bordered ">
-                                <tr>
-                                    <th>LED 1</th>
-                                    <th>LED 2</th>
-                                    <th>LED 3</th>
-                                    <th>LED 4</th>
-                                    <th>LED 5</th>
-                                    <th>LED 6</th>
-                                </tr>
-                                <tr>
-                                    <td id="c1">&nbsp;</td>
-                                    <td id="c2">&nbsp;</td>
-                                    <td id="c3">&nbsp;</td>
-                                    <td id="c4">&nbsp;</td>
-                                    <td id="c5">&nbsp;</td>
-                                    <td id="c6">&nbsp;</td>
-                                </tr>
-                            </table>
-                            <table id="displTable3" class="table table-bordered">
-                                <th>ДЕНЬ НЕДЕЛИ</th>
-                                <th>ЧАСЫ</th>
-                                <th>МИНУТЫ</th>
-                                <th>ДЕНЬ</th>
-                                <th>МЕСЯЦ</th>
-                                <th>ГОД</th>
-            </tr>
-            <tr>
-                <td id="d1">&nbsp;</td>
-                <td id="d2">&nbsp;</td>
-                <td id="d3">&nbsp;</td>
-                <td id="d4">&nbsp;</td>
-                <td id="d5">&nbsp;</td>
-                <td id="d6">&nbsp;</td>
-            </tr>
-            </table>
-            <br/>
-            <section style="background-color:#fff;">
-                <input type="button" class="btn btn-primary" id="btnDispl" value="Обновить" onclick="xmlHttpGetRequest('gtdl',getDisplay)"  autocomplete="off">
-            </section>
-            <br/>
-            <section style="background-color:#fff;">
-                <span >Для обновления данных c интервалом в 30 сек. выберите </span>
-                <input type="checkbox" id="GetDisplCheck" onclick="getDisplTimer() "  autocomplete="off">
-            </section>
-            </div>
-
-            <div id="knobs">
-                <header class="header0">
-                    <h1>Кнопки</h1></header>
-                <table class="table table-bordered " id="knobsEditTable">
-                    <tr>
-                        <th>LED</th>
-                        <th>PЕЛЕ 8</th>
-                        <th>PЕЛЕ 7</th>
-                        <th>PЕЛЕ 6</th>
-                        <th>PЕЛЕ 5</th>
-                        <th>PЕЛЕ 4</th>
-                        <th>PЕЛЕ 3</th>
-                        <th>PЕЛЕ 2</th>
-                        <th>PЕЛЕ 1</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select class="form-control" style="color:green;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="font-family:Arial, FontAwesome; color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">&#xf011</option>
-                                               <option value="*" style="color:green;">&#xf011</option>
-                                               <option value="П" style="color:blue;">&#xf00d</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
-                                        </select>
-                        </td>
-                    </tr>
-                </table>
-                <br/>
-                <section style="background-color:#fff;">
-                    <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtkb',getKnobsTable)" >
-                    <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setKnobsTable()" >
-                </section>
-            </div>
-
-            <div id="tasks">
-                <header class="header0">
-                    <h1>Настройка Задач.</h1></header>
-
-                <div id="mainTaskTable" style="height:320px;overflow:auto;display:block;">
-                    <script>
-                        document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
-                    </script>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtkb',getKnobsTable)">
+                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setKnobsTable()">
+                        </div>
+                    </div>
                 </div>
+                <div class="anchor" id="tasks">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>Настройка Задач</h2></div>
+                            <div class="panel-body">
+                                <div id="mainTaskTable">
+                                    <script>
+                                        document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2>Строка редактирования задач</h2></div>
+                            <div class="panel-body">
+                                <table class="table table-bordered " id="taskEditTable">
+                                    <caption style="font-size:1.5em;">Строка редактирования задач.</caption>
+                                    <tr>
+                                        <th>Задача</th>
+                                        <th>Функция</th>
+                                        <th>Выход</th>
+                                        <th>Вкл</th>
+                                        <th>Выкл</th>
+                                        <th>Ярк.Вкл,%</th>
+                                        <th>Ярк.Выкл,%</th>
+                                        <th>Вход</th>
+                                        <th>Порог</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" value="" readonly autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <select id="functions" class="form-control" autocomplete="off">
+                                                   <option value="  " disabled selected>&nbsp;&nbsp;</option>
+                               <option value="ТО">Таймер общий (ТО)</option>
+                                               <option value="ТС">Таймер секундный (ТС)</option>
+                                               <option value="ТМ">Таймер минутный (ТМ)</option>
+                                               <option value="НТ">Нагрев (НТ)</option>
+                                               <option value="ОТ">Охлаждение (ОТ)</option>
+                                               <option value="ТН">Таймер недельный (ТН)</option>
+                                               <option value="СО">СО2 (СО)</option>
+                                               <option value="ЦВ">Цикл волны (ЦВ)</option>
+                                               <option value="УВ">Уровень воды (УВ)</option>
+                                              </select>
+                                        </td>
+                                        <td>
 
+                                            <select id="outputs" class="form-control" autocomplete="off">
+                                 <option value="  " disabled selected>&nbsp;&nbsp;</option>
+                                                   <option value="Р1">Реле 1 (Р1)</option>
+                                               <option value="Р2">Реле 2 (Р2)</option>
+                                               <option value="Р3">Реле 3 (Р3)</option>
+                                               <option value="Р4">Реле 4 (Р4)</option>
+                                               <option value="Р5">Реле 5 (Р5)</option>
+                                               <option value="Р6">Реле 6 (Р6)</option>
+                                               <option value="Р7">Реле 7 (Р7)</option>
+                                               <option value="Р8">Реле 8 (Р8)</option>
+                                               <option value="ВР">Вентилятор (ВР)</option>
+                                                   <option value="С1">Канал LED 1 (С1)</option>
+                                               <option value="С2">Канал LED 2 (С2)</option>
+                                               <option value="С3">Канал LED 3 (С3)</option>
+                                               <option value="С4">Канал LED 4 (С4)</option>
+                                               <option value="С5">Канал LED 5 (С5)</option>
+                                               <option value="С6">Канал LED 6 (С6)</option>
+                                              </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" min="0" max="99" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" min="0" max="99" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <select id="inputs" class="form-control" autocomplete="off">
+                                 <option value="" disabled selected>&nbsp;&nbsp;</option>
+                                                   <option value="t1">t1</option>
+                                               <option value="t2">t2</option>
+                               <!--<option value="Х">-->
+                               <option value="З">З</option>
+                               <option value="Р">Р</option>
+                                              </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" min="0" max="35" step="0.1" autocomplete="off">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-success" id="addRowBtn" onclick="addRow('taskTable',rowIndexTaskTable,taskTableTxt)"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</button>
+                                <button class="btn btn-danger" id="delRowBtn" onclick="delRow('taskTable',rowIndexTaskTable)"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</button>
+                                <button class="btn btn-warning" id="editRowBtn" onclick="editRow('taskTable',taskTableHdr.length,taskTableTxt)"><i class="fa fa-pencil" aria-hidden="true"></i> Редактировать</button>
+                                <button class="btn btn-primary" id="saveTableBtn" onclick="setTaskTable()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить</button>
+                                <button class="btn btn-default" id="btn-load-tasks"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="date">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Настройка Даты</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered" id="editDateTable">
+                                <thead>
+                                    <tr>
+                                        <th>ДЕНЬ НЕДЕЛИ</th>
+                                        <th>ЧАСЫ</th>
+                                        <th>МИНУТЫ</th>
+                                        <th>ДЕНЬ</th>
+                                        <th>МЕСЯЦ</th>
+                                        <th>ГОД</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="dat1">&nbsp;</td>
+                                        <td id="dat2">&nbsp;</td>
+                                        <td id="dat3">&nbsp;</td>
+                                        <td id="dat4">&nbsp;</td>
+                                        <td id="dat5">&nbsp;</td>
+                                        <td id="dat6">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setDate()">
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="fan">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Настройка Вентиллятора</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered " id="editFan">
+                                <tr>
+                                    <th>МОЩНОСТЬ</th>
+                                    <th>СТАТУС</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="number" min="0" max="99" class="form-control" placeholder="0...99">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                                 <option value="Х" style="color:red;">X</option>
+                                                 <option value="*" style="color:green;">*</option>
+                                          </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtfn',getFanTable)">
+                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setFanTable()">
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="moon">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Настройка Лунного Света</h2>
+                        </div>
 
-                <br/>
+                        <div class="panel-body">
+                            <table class="table table-bordered " id="moonLightTable">
+                                <tr>
+                                    <th>ВКЛ</th>
+                                    <th>ВЫКЛ</th>
+                                    <th>СТАТУС</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" placeholder="ЧЧ:ММ" class="form-control">
+                                    </td>
 
+                                    <td>
+                                        <input type="text" placeholder="ЧЧ:ММ" class="form-control">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                             <option value="Х" style="color:red;">X</option>
+                                             <option value="*" style="color:green;">*</option>
+                                      </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtml',getMoonLightTable)">
+                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setMoonLightTable()">
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="termod">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Настройка Термодатчиков</h2>
+                        </div>
+                        <div class="panel-body">
+                            Поиск термодатчиков:
+                            <input type="submit" class="btn btn-success" value="Старт" id="tsrcBtn" onclick="searchTSReq('tsrc')">
+                            <input type="submit" class="btn btn-danger" value="Стоп" id="tstpBtn" onclick="searchTSReq('tstp')">
 
-                <table class="table table-bordered " id="taskEditTable">
-                    <caption style="font-size:1.5em;">Строка редактирования задач.</caption>
-                    <tr>
-                        <th>Задача</th>
-                        <th>Функция</th>
-                        <th>Выход</th>
-                        <th>Вкл</th>
-                        <th>Выкл</th>
-                        <th>Ярк.Вкл,%</th>
-                        <th>Ярк.Выкл,%</th>
-                        <th>Вход</th>
-                        <th>Порог</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" class="form-control" value="" readonly autocomplete="off">
-                        </td>
-                        <td>
-                            <select id="functions" class="form-control" autocomplete="off">
-                                                 <option value="  " disabled selected>&nbsp&nbsp</option>
-                             <option value="ТО">Таймер общий (ТО)</option>
-                                             <option value="ТС">Таймер секундный (ТС)</option>
-                                             <option value="ТМ">Таймер минутный (ТМ)</option>
-                                             <option value="НТ">Нагрев (НТ)</option>
-                                             <option value="ОТ">Охлаждение (ОТ)</option>
-                                             <option value="ТН">Таймер недельный (ТН)</option>
-                                             <option value="СО">СО2 (СО)</option>
-                                             <option value="ЦВ">Цикл волны (ЦВ)</option>
-                                             <option value="УВ">Уровень воды (УВ)</option>
-                                            </select>
-                        </td>
-                        <td>
+                            <br /> Результаты:
+                            <table class="table table-bordered " id="termosensTable">
+                                <tr>
+                                    <th>t1</th>
+                                    <th>t2</th>
+                                </tr>
+                                <tr>
+                                    <td id="tdt1">&nbsp;</td>
+                                    <td id="tdt2">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="calibPh">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Калибровка рН</h2>
+                        </div>
+                        <div class="panel-body">
+                            <section>
+                                <span>Чтобы начать процесс калибровки датчика нажмите кнопку
+                              Старт.</span>
+                                <button type="submit" class="btn btn-success" id="strPhBtn" onclick="calibrPhReq('cphb')"><i class="fa fa-play" aria-hidden="true"></i> Старт</button>
+                            </section>
 
-                            <select id="outputs" class="form-control" autocomplete="off">
-                               <option value="  " disabled selected>&nbsp&nbsp</option>
-                                                 <option value="Р1">Реле 1 (Р1)</option>
-                                             <option value="Р2">Реле 2 (Р2)</option>
-                                             <option value="Р3">Реле 3 (Р3)</option>
-                                             <option value="Р4">Реле 4 (Р4)</option>
-                                             <option value="Р5">Реле 5 (Р5)</option>
-                                             <option value="Р6">Реле 6 (Р6)</option>
-                                             <option value="Р7">Реле 7 (Р7)</option>
-                                             <option value="Р8">Реле 8 (Р8)</option>
-                                             <option value="ВР">Вентилятор (ВР)</option>
-                                                 <option value="С1">Канал LED 1 (С1)</option>
-                                             <option value="С2">Канал LED 2 (С2)</option>
-                                             <option value="С3">Канал LED 3 (С3)</option>
-                                             <option value="С4">Канал LED 4 (С4)</option>
-                                             <option value="С5">Канал LED 5 (С5)</option>
-                                             <option value="С6">Канал LED 6 (С6)</option>
-                                            </select>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" autocomplete="off">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" autocomplete="off">
-                        </td>
-                        <td>
-                            <input type="number" class="form-control" min="0" max="99" autocomplete="off">
-                        </td>
-                        <td>
-                            <input type="number" class="form-control" min="0" max="99" autocomplete="off">
-                        </td>
-                        <td>
-                            <select id="inputs" class="form-control" autocomplete="off">
-                               <option value="" disabled selected>&nbsp&nbsp</option>
-                                                 <option value="t1">t1</option>
-                                             <option value="t2">t2</option>
-                             <!--<option value="Х">-->
-                             <option value="З">З</option>
-                             <option value="Р">Р</option>
-                                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control" min="0" max="35" step="0.1" autocomplete="off">
-                        </td>
-                    </tr>
-                </table>
+                            <section>
+                                <span>Поместите датчик в буферный раствор с рН=4,0. По истечении 1 мин. нажмите кнопку
+                              Готово рН4.</span>
+                                <input type="submit" class="btn btn-success" value="Готово рН4" id="rdyPh4Btn" disabled="true" onclick="calibrPhReq('cph4')">
+                            </section>
 
-                <br/>
-                <section style="background-color:#fff;">
-                    <button class="btn btn-success" id="addRowBtn" onclick="addRow('taskTable',rowIndexTaskTable,taskTableTxt)"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</button>
-                    <button class="btn btn-danger" id="delRowBtn" onclick="delRow('taskTable',rowIndexTaskTable)"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</button>
-                    <button class="btn btn-warning" id="editRowBtn" onclick="editRow('taskTable',taskTableHdr.length,taskTableTxt)"><i class="fa fa-pencil" aria-hidden="true"></i> Редактировать</button>
-                    <button class="btn btn-primary" id="saveTableBtn" onclick="setTaskTable()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить</button>
-                    <button class="btn btn-default" id="btn-load-tasks"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
-                </section>
+                            <section>
+                                <span>Поместите датчик в буферный раствор с рН=7,0. По истечении 1 мин. нажмите кнопку
+                             Готово рН7.</span>
+                                <input type="submit" class="btn btn-success" value="Готово рН7" id="rdyPh7Btn" disabled="true" onclick="calibrPhReq('cph7')">
+                            </section>
 
-                <br/>
+                            <section>
+                                <span>Чтобы закончить процесс калибровки датчика нажмите кнопку
+                             Стоп.</span>
+                                <button type="submit" class="btn btn-danger" id="stpPhBtn" onclick="calibrPhReq('cphe')"><i class="fa fa-stop" aria-hidden="true"></i> Стоп</button>
+                            </section>
+
+                            <br/><br/>
+                            <table class="table table-bordered " id="calibrPhTable">
+                                <tr>
+                                    <th>U pH4, mB</th>
+                                    <th>U pH7, mB</th>
+                                    <th>S, mA/B</th>
+                                    <th>Статус</th>
+                                </tr>
+                                <tr>
+                                    <td id="uph4">&nbsp;</td>
+                                    <td id="uph7">&nbsp;</td>
+                                    <td id="sphm">&nbsp;</td>
+                                    <td id="stph">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="test">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Тест Подсветки</h2>
+                        </div>
+                        <div class="panel-body">
+                            <section>
+                                <span>Чтобы начать тестирование подсветки нажмите кнопку Старт.</span>
+                                <button type="submit" class="btn btn-success" id="beginLedTestBtn" onclick="testLedsReq('gttb')"><i class="fa fa-play" aria-hidden="true"></i> Старт</button>
+                            </section>
+
+                            <section>
+                                <span>Чтобы выйти из процесса тестирования подсветки нажмите кнопку Стоп.</span>
+                                <button type="submit" class="btn btn-danger" id="endLedTestBtn" disabled="true" onclick="testLedsReq('gtte')"><i class="fa fa-stop" aria-hidden="true"></i> Стоп</button>
+                            </section>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div id="date">
-                <header class="header0">
-                    <h1>Насторойка Даты</h1></header>
-                <table class="table table-bordered " id="editDateTable">
-                    <tr>
-                        <th>ДЕНЬ НЕДЕЛИ</th>
-                        <th>ЧАСЫ</th>
-                        <th>МИНУТЫ</th>
-                        <th>ДЕНЬ</th>
-                        <th>МЕСЯЦ</th>
-                        <th>ГОД</th>
-                    </tr>
-                    <tr>
-                        <td id="dat1">&nbsp;</td>
-                        <td id="dat2">&nbsp;</td>
-                        <td id="dat3">&nbsp;</td>
-                        <td id="dat4">&nbsp;</td>
-                        <td id="dat5">&nbsp;</td>
-                        <td id="dat6">&nbsp;</td>
-                    </tr>
-                </table>
-                <br/>
-                <section style="background-color:#fff;">
-                    <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setDate()" >
-                </section>
-            </div>
-
-            <div id="fan">
-                <header class="header0">
-                    <h1>Настройка Вентиллятора.</h1></header>
-                <table class="table table-bordered " id="editFan">
-                    <tr>
-                        <th>МОЩНОСТЬ</th>
-                        <th>СТАТУС</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="number" min="0" max="99" class="form-control" placeholder="0...99">
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                        </select>
-                        </td>
-                    </tr>
-                </table>
-                <br/>
-                <section style="background-color:#fff;">
-
-                    <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtfn',getFanTable)">
-                    <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setFanTable()">
-                </section>
-            </div>
-
-            <div id="moon">
-                <header class="header0">
-                    <h1>Настройка Лунного Света.</h1></header>
-                <table class="table table-bordered " id="moonLightTable">
-                    <tr>
-                        <th>ВКЛ</th>
-                        <th>ВЫКЛ</th>
-                        <th>СТАТУС</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" placeholder="ЧЧ:ММ" class="form-control">
-                        </td>
-
-                        <td>
-                            <input type="text" placeholder="ЧЧ:ММ" class="form-control">
-                        </td>
-                        <td>
-                            <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                        </select>
-                        </td>
-                    </tr>
-                </table>
-                <br/>
-                <section style="background-color:#fff;">
-                    <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtml',getMoonLightTable)" >
-                    <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setMoonLightTable()" >
-                </section>
-            </div>
-
-            <div id="termod">
-                <header class="header0">
-                    <h1>Настройка Термодатчиков.</h1></header>
-                <section style="background-color:#d0d0d0;">
-                    <span >Чтобы начать или повторить процесс поиска термодатчиков нажмите кнопку
-                            Старт.</span>
-                    <input type="submit" class="btn btn-success" value="Старт" id="tsrcBtn" onclick="searchTSReq('tsrc')" >
-                </section>
-
-
-                <section style="background-color:#fff;">
-                    <span >Чтобы выйти из процесса поиска термодатчиков нажмите кнопку
-                           Стоп.</span>
-                    <input type="submit" class="btn btn-danger" value="Стоп" id="tstpBtn" onclick="searchTSReq('tstp')" >
-                </section>
-                <br/>
-                <br/>
-                <table class="table table-bordered " id="termosensTable">
-                    <tr>
-                        <th>t1</th>
-                        <th>t2</th>
-                    </tr>
-                    <tr>
-                        <td id="tdt1">&nbsp;</td>
-                        <td id="tdt2">&nbsp;</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="calibPh">
-                <header class="header0">
-                    <h1>Калибровка рН.</h1></header>
-
-                <section style="background-color:#d0d0d0;">
-                    <span >Чтобы начать процесс калибровки датчика нажмите кнопку
-                            Старт.</span>
-                    <input type="submit" class="btn btn-success" value="Старт" id="strPhBtn" onclick="calibrPhReq('cphb')" >
-                </section>
-
-                <section style="background-color:#fff;">
-                    <span >Поместите датчик в буферный раствор с рН=4,0. По истечении 1 мин. нажмите кнопку
-                            Готово рН4.</span>
-                    <input type="submit" class="btn btn-success" value="Готово рН4" id="rdyPh4Btn" disabled="true" onclick="calibrPhReq('cph4')" >
-                </section>
-
-                <section style="background-color:#d0d0d0;">
-                    <span >Поместите датчик в буферный раствор с рН=7,0. По истечении 1 мин. нажмите кнопку
-                           Готово рН7.</span>
-                    <input type="submit" class="btn btn-success" value="Готово рН7" id="rdyPh7Btn" disabled="true" onclick="calibrPhReq('cph7')" >
-                </section>
-
-                <section style="background-color:#fff;">
-                    <span >Чтобы закончить процесс калибровки датчика нажмите кнопку
-                           Стоп.</span>
-                    <input type="submit" class="btn btn-danger" value="Стоп" id="stpPhBtn" onclick="calibrPhReq('cphe')" >
-                </section>
-                <br/><br/>
-                <table class="table table-bordered " id="calibrPhTable">
-                    <tr>
-                        <th>U pH4, mB</th>
-                        <th>U pH7, mB</th>
-                        <th>S, mA/B</th>
-                        <th>Статус</th>
-                    </tr>
-                    <tr>
-                        <td id="uph4">&nbsp;</td>
-                        <td id="uph7">&nbsp;</td>
-                        <td id="sphm">&nbsp;</td>
-                        <td id="stph">&nbsp;</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="test">
-                <header class="header0">
-                    <h1>Тест Подсветки.</h1></header>
-                <section style="background-color:#d0d0d0;">
-                    <span >Чтобы начать тестирование подсветки нажмите кнопку Старт.</span>
-                    <input type="submit" class="btn btn-success" value="Старт" id="beginLedTestBtn" onclick="testLedsReq('gttb')" >
-                </section>
-
-
-                <section style="background-color:#fff;">
-                    <span >Чтобы выйти из процесса тестирования подсветки нажмите кнопку Стоп.</span>
-                    <input type="submit" class="btn btn-danger" value="Стоп" id="endLedTestBtn" disabled="true" onclick="testLedsReq('gtte')" >
-                </section>
-
-            </div>
-            </div>
-            </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="statusString"><span class="text-info" id="statusXHR"></span> </td>
-            </tr>
-        </table>
         </div>
-      </div>
     </div>
+    </div>
+
+
 </body>
 
 </html>

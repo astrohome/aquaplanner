@@ -18,6 +18,7 @@ var taskTableTxt = [
 
 $(document).ready(function() {
     // This command is used to initialize some elements and make them work properly
+    taskTableBtnInit();
     $.material.init();
 
     $("#btn-load-tasks").click(function() {
