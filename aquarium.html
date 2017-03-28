@@ -26,12 +26,7 @@
     <script src="js/ripples.min.js"></script>
     <script src="js/snackbar.min.js"></script>
     <script src="js/material.min.js"></script>
-    <script>
-       $(document).ready(function() {
-           // This command is used to initialize some elements and make them work properly
-           $.material.init();
-       });
-   </script>
+    <script src="js/jquery.tabledit.min.js"></script>
 
     <script src="aquarium.js"></script>
 </head>
@@ -349,7 +344,7 @@
                     <button class="btn btn-danger" id="delRowBtn" onclick="delRow('taskTable',rowIndexTaskTable)"><i class="fa fa-trash" aria-hidden="true"></i> Удалить</button>
                     <button class="btn btn-warning" id="editRowBtn" onclick="editRow('taskTable',taskTableHdr.length,taskTableTxt)"><i class="fa fa-pencil" aria-hidden="true"></i> Редактировать</button>
                     <button class="btn btn-primary" id="saveTableBtn" onclick="setTaskTable()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Сохранить</button>
-                    <button class="btn btn-default" onclick="xmlHttpGetBinaryRequest('gtts',getTaskTable)"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
+                    <button class="btn btn-default" id="btn-load-tasks"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
                 </section>
 
                 <br/>

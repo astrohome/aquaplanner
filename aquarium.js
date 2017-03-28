@@ -16,6 +16,20 @@ var taskTableTxt = [
     //["4","ТО","С2","17:30","20:40","20","80","В",""],
 ];
 
+$(document).ready(function() {
+    // This command is used to initialize some elements and make them work properly
+    $.material.init();
+
+    $("#btn-load-tasks").click(function() {
+       xmlHttpGetBinaryRequest('gtts', getTaskTable);
+       $('#taskTable').Tabledit({
+          columns: {
+              identifier: [0, 'id'],
+              editable: [[1, 'function', '{"ТО": "Таймер общий (ТО)","ТС": "Таймер секундный (ТС)"}'], [2, 'output']]
+          }
+      });
+    });
+});
 
 
 //XMLHttpRequest**********************************************************************************
@@ -603,7 +617,6 @@ function populateTable(table, rows, cells, content) {
         row.onclick = function() {
             rowIndexTaskTable = this.rowIndex;
 
-
             if (clickIndexRow != 0) {
                 if (clickIndexRow % 2 != 0) {
                     table.rows[clickIndexRow].style.backgroundColor = "#fff";
@@ -621,7 +634,7 @@ function populateTable(table, rows, cells, content) {
 
             var tableEdit = document.getElementById('taskEditTable');
             for (var i = 0; i < cells; i++) {
-                tableEdit.rows[1].cells[i].childNodes[1].value = this.cells[i].innerHTML;
+                tableEdit.rows[1].cells[i].childNodes[1].childNodes[0].value = this.cells[i].innerHTML;
             }
         }
 
@@ -664,7 +677,7 @@ function addRow(tableID, rowNumber, content) {
 
         var tableEdit = document.getElementById('taskEditTable');
         for (var i = 0; i < cellCount; i++) {
-            tableEdit.rows[1].cells[i].childNodes[1].value = this.cells[i].innerHTML;
+            tableEdit.rows[1].cells[i].childNodes[1].childNodes[0].value = this.cells[i].innerHTML;
         }
 
 
@@ -676,11 +689,11 @@ function addRow(tableID, rowNumber, content) {
 
         if (j == 0) {
             cellTd.innerHTML = rowCount; // 0 - headline
-            tableEdit.rows[1].cells[0].childNodes[1].value = rowCount;
+            tableEdit.rows[1].cells[0].childNodes[1].childNodes[0].value = rowCount;
         } else {
             if (rowNumber != undefined) {
                 cellTd.innerHTML = table.rows[rowNumber].cells[j].innerHTML;
-                tableEdit.rows[1].cells[j].childNodes[1].value = table.rows[rowNumber].cells[j].innerHTML;
+                tableEdit.rows[1].cells[j].childNodes[1].childNodes[0].value = table.rows[rowNumber].cells[j].innerHTML;
             } else {
                 cellTd.innerHTML = table.rows[rowCount - 1].cells[j].innerHTML;
             }
@@ -731,7 +744,7 @@ function delRow(tableId, row) {
         }
 
         for (var i = 0; i < cellCount; i++) {
-            tableEdit.rows[1].cells[i].childNodes[1].value = table.rows[row].cells[i].innerHTML;
+            tableEdit.rows[1].cells[i].childNodes[1].childNodes[0].value = table.rows[row].cells[i].innerHTML;
         }
 
         // clickIndexRow=0;
