@@ -11,6 +11,10 @@ th {
   background-color: lightgrey;
 }
 
+.anchor {
+    padding-top: 30px;
+}
+
 
 /*
  * Global add-ons
