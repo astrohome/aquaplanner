@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "org.galaxysoft.aquaplanner"
+    versionCode = "10"
+    version     = "1.0.0" >
+
+<!-- versionCode is optional and Android only -->
+
+  <name>AQUAPLANNER.net</name>
+
+  <platform name="android" />
+
+  <description>
+      App to interact with Aquaplanner.net WiFi enabled controller.
+  </description>
+
+</widget>
