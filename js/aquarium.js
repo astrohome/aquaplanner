@@ -23,12 +23,6 @@ $(document).ready(function() {
 
     $("#btn-load-tasks").click(function() {
        xmlHttpGetBinaryRequest('gtts', getTaskTable);
-       $('#taskTable').Tabledit({
-          columns: {
-              identifier: [0, 'id'],
-              editable: [[1, 'function', '{"ТО": "Таймер общий (ТО)","ТС": "Таймер секундный (ТС)"}'], [2, 'output']]
-          }
-      });
     });
 });
 
@@ -39,9 +33,9 @@ function xmlHttpPostRequest(messageToSend, messageName) {
     var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onload = function() {
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     };
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     xmlhttp.open('POST', adr, true);
     xmlhttp.send(jsonData);
     //console.log(jsonData);
@@ -55,17 +49,17 @@ function xmlHttpGetRequest(messageName, callback) {
     xmlhttp.onload = function() {
         //console.log(xmlhttp.responseText);
         var message = JSON.parse(xmlhttp.responseText);
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
         callback(message);
     };
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     xmlhttp.open('GET', adr, true);
     xmlhttp.send();
     //console.log(adr);
 }
 //************************************************************************************************
 function clearStatusString() {
-    document.getElementById("statusXHR").innerHTML = "";
+    $('#loading').modal('hide');
 }
 
 //EDIT KNOBS TABLE********************************************************************************
@@ -188,7 +182,7 @@ function searchTSReq(task) {
     for (var i = 0; i < 2; i++) {
         obj.push('\xa0');
     }
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     switch (task) {
         case "tsrc":
             document.getElementById("menuList").style.visibility = "hidden";
@@ -214,7 +208,7 @@ function searchTSReq(task) {
                 table.rows[1].cells[1].innerHTML = "X";
             }
         }
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     }
 
     var adr = document.getElementById("InpUrl").value + portString + "/" + task + "/";
@@ -227,7 +221,7 @@ function searchTSReq(task) {
 //TEST LEDS*************************************************************************************************
 function testLedsReq(task) {
     var adr = document.getElementById("InpUrl").value + portString + "/" + task + "/";
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     var xmlhttp = new XMLHttpRequest();
 
     switch (task) {
@@ -244,7 +238,7 @@ function testLedsReq(task) {
     }
 
     xmlhttp.onload = function() {
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     };
 
     xmlhttp.open("GET", adr, true);
@@ -259,7 +253,7 @@ function calibrPhReq(task) {
     var table = document.getElementById('calibrPhTable');
     var xmlhttp = new XMLHttpRequest();
     var obj = [];
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     for (var i = 0; i < 4; i++) {
         obj.push('\xa0');
     }
@@ -290,7 +284,7 @@ function calibrPhReq(task) {
             table.rows[1].cells[2].innerHTML = obj[2];
             table.rows[1].cells[3].innerHTML = phCalibrStatus[obj[3]];
         }
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     }
 
     xmlhttp.open("GET", adr, true);
@@ -1602,9 +1596,9 @@ function xmlHttpPostBinaryRequest(messageToSend, messageName) {
     var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
 
     xmlHttpRequest.onload = function() {
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     };
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     xmlHttpRequest.open('POST', adr, true);
     xmlHttpRequest.send(messageToSend);
 }
@@ -1636,13 +1630,13 @@ function saveLastUrl() {
 function xmlHttpGetBinaryRequest(messageName, callback) {
     var xmlHttpRequest = new XMLHttpRequest();
     var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
-    document.getElementById("statusXHR").innerHTML = "Ожидайте...";
+    $('#loading').modal({backdrop: 'static'});
     xmlHttpRequest.open('GET', adr, true);
     xmlHttpRequest.responseType = 'arraybuffer';
     xmlHttpRequest.onload = function() {
         var message = xmlHttpRequest.response;
         callback(message);
-        document.getElementById("statusXHR").innerHTML = "";
+        $('#loading').modal('hide');
     };
     xmlHttpRequest.send();
 }
