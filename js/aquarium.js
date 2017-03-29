@@ -104,16 +104,16 @@ function getKnobsTable(cellDataR) {
 
     //xmlHttpRequest('GET',null,cellDataR,'gtkb');
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-        table.rows[1].cells[i].childNodes[1].value = ' ';
+        table.rows[1].cells[i].childNodes[1].childNodes[0].value = ' ';
         if (cellDataR[i] == 0) {
-            table.rows[1].cells[i].childNodes[1].value = 'Х';
-            table.rows[1].cells[i].childNodes[1].style.color = 'red';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].value = 'Х';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'red';
         } else if (cellDataR[i] == 1) {
-            table.rows[1].cells[i].childNodes[1].value = '*';
-            table.rows[1].cells[i].childNodes[1].style.color = 'green';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].value = '*';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'green';
         } else if (cellDataR[i] == 2) {
-            table.rows[1].cells[i].childNodes[1].value = 'П';
-            table.rows[1].cells[i].childNodes[1].style.color = 'blue';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].value = 'П';
+            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'blue';
         }
     }
 }
