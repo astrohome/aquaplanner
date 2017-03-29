@@ -20,4 +20,6 @@
 
   <preference name="permissions" value="none"/>
 
+  <allow-navigation href="*" />
+
 </widget>
