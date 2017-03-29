@@ -6,7 +6,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-  
+
     <title>AQUAPLANNER NET</title>
     <link rel="shortcut icon" href="favicon.ico" />
 
@@ -43,11 +43,11 @@
                     <h4 class="modal-title" id="myModalLabel">Ожидайте...</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="progress progress-striped active">
-                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                      <span class="sr-only">Loading...</span>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
@@ -181,8 +181,12 @@
                         <div class="panel-footer">
                             <input type="button" class="btn btn-primary" id="btnDispl" value="Обновить" onclick="xmlHttpGetRequest('gtdl',getDisplay)" autocomplete="off">
                             <br />
-                            <span>Для обновления данных c интервалом в 30 сек. выберите </span>
-                            <input type="checkbox" id="GetDisplCheck" onclick="getDisplTimer()" autocomplete="off">
+                            <div class="togglebutton">
+                                <label>
+                                  <input type="checkbox" id="GetDisplCheck" onclick="getDisplTimer()" autocomplete="off">
+                                  &nbsp; Обновлять данные c интервалом в 30 сек
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
