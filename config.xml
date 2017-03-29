@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "org.galaxysoft.aquaplanner"
     versionCode = "10"
-    version     = "1.0.0" >
+    version     = "1.0.1" >
 
 <!-- versionCode is optional and Android only -->
 
@@ -17,5 +17,9 @@
   <description>
       App to interact with Aquaplanner.net WiFi enabled controller.
   </description>
+
+  <preference name="permissions" value="none"/>
+
+  <feature name="http://api.phonegap.com/1.0/network"/>
 
 </widget>
