@@ -24,18 +24,6 @@ var taskTableTxt = [
     //["4","ТО","С2","17:30","20:40","20","80","В",""],
 ];
 
-$(document).ready(function() {
-    // This command is used to initialize some elements and make them work properly
-    document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
-    taskTableBtnInit();
-    $.material.init();
-
-    $("#btn-load-tasks").click(function() {
-       xmlHttpGetBinaryRequest('gtts', getTaskTable);
-    });
-});
-
-
 //XMLHttpRequest**********************************************************************************
 function xmlHttpPostRequest(messageToSend, messageName) {
     var jsonData = JSON.stringify(messageToSend);
@@ -498,17 +486,7 @@ function _enum(list) {
     }
     return Object.freeze(list);
 }
-//enum POWERLINE{RLY1,RLY2,RLY3,RLY4,RLY5,RLY6,RLY7,RLY8,MLIGHT,LED1,LED2,LED3,LED4,LED5,LED6,FAN};
-//enum FUNCTIONS{FTS,FTM,FT,FHT,FCT,FTW,FCO,FSC,FWL};
-//enum INPUTNUMBER {INP_NAME_T1,INP_NAME_T2,INP_NONAME};
-//FTS timer seconds
-//FTM timer minutes
-//FT  timer common
-//FCT cooler termostat
-//FHT heater termostat
-//FCO water acid pH by CO2
-//FSC short cycle timer
-//FWL water level control
+
 var DATAOFFSET = _enum({
     numberLine: 0,
     functionNumber: 1,
@@ -1695,3 +1673,22 @@ function populateSelect(cData) {
 
     return select;
 }
+
+$(document).ready(function() {
+    // This command is used to initialize some elements and make them work properly
+    document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
+    taskTableBtnInit();
+    $.material.init();
+
+    $("#btn-load-tasks").click(function() {
+       xmlHttpGetBinaryRequest('gtts', getTaskTable);
+    });
+
+    $("#btnDispl").click(function() {
+      xmlHttpGetRequest('gtdl',getDisplay);
+    })
+
+    $("#GetDisplCheck").click(function() {
+      getDisplTimer();
+    });
+});
