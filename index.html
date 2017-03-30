@@ -50,15 +50,15 @@
 
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="nav-header" id="d_1" onclick="xhrTimer(this)"><a href="#display"><i class="fa fa-dashboard fa-lg"></i> Статус</a></li>
-                    <li class="nav-header" id="k_2" onclick="xhrTimer(this)"><a href="#knobs"><i class="fa fa-toggle-on" aria-hidden="true"></i> Кнопки</a></li>
-                    <li class="nav-header" id="t_3" onclick="xhrTimer(this)"><a href="#tasks"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Настройка Задач</a></li>
-                    <li class="nav-header" id="d_4" onclick="xhrTimer(this)"><a href="#date"><i class="fa fa-calendar" aria-hidden="true"></i> Настройка Даты</a></li>
-                    <li class="nav-header" id="f_5" onclick="xhrTimer(this)"><a href="#fan"><i class="fa fa-fan" aria-hidden="true"></i> Настройка Вентиллятора</a></li>
-                    <li class="nav-header" id="m_5" onclick="xhrTimer(this)"><a href="#moon"><i class="fa fa-moon-o" aria-hidden="true"></i> Настройка Лунного Света</a></li>
-                    <li class="nav-header" id="t_6" onclick="xhrTimer(this)"><a href="#termod"><i class="fa fa-thermometer-half" aria-hidden="true"></i> Настройка Термодатчиков</a></li>
-                    <li class="nav-header" id="h_7" onclick="xhrTimer(this)"><a href="#calibPh"><i class="fa fa-check-circle" aria-hidden="true"></i> Калибровка pH</a></li>
-                    <li class="nav-header" id="t_8" onclick="xhrTimer(this)"><a href="#test"><i class="fa fa-play" aria-hidden="true"></i> Тест Подсветки</a></li>
+                    <li class="nav-header" id="d_1"><a href="#display"><i class="fa fa-dashboard fa-lg"></i> Статус</a></li>
+                    <li class="nav-header" id="k_2"><a href="#knobs"><i class="fa fa-toggle-on" aria-hidden="true"></i> Кнопки</a></li>
+                    <li class="nav-header" id="t_3"><a href="#tasks"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Настройка Задач</a></li>
+                    <li class="nav-header" id="d_4"><a href="#date"><i class="fa fa-calendar" aria-hidden="true"></i> Настройка Даты</a></li>
+                    <li class="nav-header" id="f_5"><a href="#fan"><i class="fa fa-fan" aria-hidden="true"></i> Настройка Вентиллятора</a></li>
+                    <li class="nav-header" id="m_5"><a href="#moon"><i class="fa fa-moon-o" aria-hidden="true"></i> Настройка Лунного Света</a></li>
+                    <li class="nav-header" id="t_6"><a href="#termod"><i class="fa fa-thermometer-half" aria-hidden="true"></i> Настройка Термодатчиков</a></li>
+                    <li class="nav-header" id="h_7"><a href="#calibPh"><i class="fa fa-check-circle" aria-hidden="true"></i> Калибровка pH</a></li>
+                    <li class="nav-header" id="t_8"><a href="#test"><i class="fa fa-play" aria-hidden="true"></i> Тест Подсветки</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -82,40 +82,86 @@
                             <h2>Статус</h2>
                         </div>
                         <div class="panel-body">
-                            <table id="displTable1" class="table table-bordered ">
-                                <thead>
-                                    <tr>
-                                        <th>pH</th>
-                                        <th>t1</th>
-                                        <th>t2</th>
-                                        <th>PЕЛЕ 8</th>
-                                        <th>PЕЛЕ 7</th>
-                                        <th>PЕЛЕ 6</th>
-                                        <th>PЕЛЕ 5</th>
-                                        <th>PЕЛЕ 4</th>
-                                        <th>PЕЛЕ 3</th>
-                                        <th>PЕЛЕ 2</th>
-                                        <th>PЕЛЕ 1</th>
-                                        <th>FAN</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="ph">&nbsp;</td>
-                                        <td id="t1">&nbsp;</td>
-                                        <td id="t2">&nbsp;</td>
-                                        <td id="r8">&nbsp;</td>
-                                        <td id="r7">&nbsp;</td>
-                                        <td id="r6">&nbsp;</td>
-                                        <td id="r5">&nbsp;</td>
-                                        <td id="r4">&nbsp;</td>
-                                        <td id="r3">&nbsp;</td>
-                                        <td id="r2">&nbsp;</td>
-                                        <td id="r1">&nbsp;</td>
-                                        <td id="fn">&nbsp;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div id="dashboardStatusTable" class="container-fluid">
+                                <div class="row th">
+                                    <div class="col-xs-1">
+                                        pH
+                                    </div>
+                                    <div class="col-xs-1">
+                                        t1
+                                    </div>
+                                    <div class="col-xs-1">
+                                        t2
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 8
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 7
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 6
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 5
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 4
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 3
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 2
+                                    </div>
+                                    <div class="col-xs-1">
+                                        PЕЛЕ 1
+                                    </div>
+                                    <div class="col-xs-1">
+                                        FAN
+                                    </div>
+                                </div>
+                                <div class="row td">
+                                    <div id="stVal0" class="col-xs-1">
+                                        pH
+                                    </div>
+                                    <div id="stVal1" class="col-xs-1">
+                                        t1
+                                    </div>
+                                    <div id="stVal2" class="col-xs-1">
+                                        t2
+                                    </div>
+                                    <div id="stVal3" class="col-xs-1">
+                                        r8
+                                    </div>
+                                    <div id="stVal4" class="col-xs-1">
+                                        r7
+                                    </div>
+                                    <div id="stVal5" class="col-xs-1">
+                                        r6
+                                    </div>
+                                    <div id="stVal6" class="col-xs-1">
+                                        r5
+                                    </div>
+                                    <div id="stVal7" class="col-xs-1">
+                                        r4
+                                    </div>
+                                    <div id="stVal8" class="col-xs-1">
+                                        r3
+                                    </div>
+                                    <div id="stVal9" class="col-xs-1">
+                                        r2
+                                    </div>
+                                    <div id="stVal10" class="col-xs-1">
+                                        r1
+                                    </div>
+                                    <div id="stVal11" class="col-xs-1">
+                                        FAN
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
                             <table id="displTable2" class="table table-bordered ">
                                 <thead>
                                     <tr>

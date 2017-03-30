@@ -17,7 +17,13 @@ body {
   padding-top: 50px;
 }
 
-th {
+div.th div, div.td div {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid lightgrey;
+}
+
+th, div.th div {
   background-color: lightgrey;
 }
 
@@ -120,10 +126,6 @@ th {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
-}
-
-th {
-  text-align: center;
 }
 
 i.fa {

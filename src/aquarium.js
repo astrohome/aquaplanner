@@ -18,10 +18,7 @@ var clickIndexRow = 0;
 
 var taskTableHdr = ["Задача", "Функция", "Выход", "Вкл", "Выкл", "Ярк.Вкл,%", "Ярк.Выкл,%", "Вход", "Порог"];
 var taskTableTxt = [
-    ["1", "ТО", "Р1", "17:30", "20:40", "", "", "", ""],
-    //["2","ТО","Р2","17:30","20:40","","","В",""],
-    //["3","СО","Р3","","","","","Т1","20"],
-    //["4","ТО","С2","17:30","20:40","20","80","В",""],
+    ["1", "ТО", "Р1", "17:30", "20:40", "", "", "", ""]
 ];
 
 //XMLHttpRequest**********************************************************************************
@@ -91,15 +88,9 @@ function setKnobsTable() {
 }
 
 function getKnobsTable(cellDataR) {
-    //var cellData =[];
-    //var cellDataR =[];
-    var table = document.getElementById('knobsEditTable');
-    //for(var i=0;i<table.rows[0].cells.length;i++){
-    //	cellData.push("");
-    //	cellDataR.push();
-    //}
 
-    //xmlHttpRequest('GET',null,cellDataR,'gtkb');
+    var table = document.getElementById('knobsEditTable');
+
     for (var i = 0; i < table.rows[0].cells.length; i++) {
         table.rows[1].cells[i].childNodes[1].value = ' ';
         if (cellDataR[i] == 0) {
@@ -390,12 +381,11 @@ function setDate() {
 //SHOW DISPLAY*****************************************************************
 function getDisplay(cellDataR) {
 
-    var table1 = document.getElementById("displTable1");
     var table2 = document.getElementById("displTable2");
     var table3 = document.getElementById("displTable3");
 
     for (var i = 0; i < 12; i++) {
-        var tableCell = table1.rows[1].cells[i];
+        var tableCell = document.getElementById("stVal" + i);
         switch (i) {
             case 0:
             case 1:
