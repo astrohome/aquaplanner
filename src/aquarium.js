@@ -1,13 +1,10 @@
 require('jquery');
 require('bootstrap');
-require("font-awesome-webpack");
 require('bootstrap-material-design');
 require('vis');
 require('ripples');
 
 import './custom.css';
-import 'roboto-npm-webfont';
-
 
 var portString = ":314";
 var urlString = "";
