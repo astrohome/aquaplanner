@@ -1,3 +1,14 @@
+require('jquery');
+require('bootstrap');
+require("font-awesome-webpack");
+require('bootstrap-material-design');
+require('vis');
+require('ripples');
+
+import './custom.css';
+import 'roboto-npm-webfont';
+
+
 var portString = ":314";
 var urlString = "";
 var dat;
@@ -18,6 +29,7 @@ var taskTableTxt = [
 
 $(document).ready(function() {
     // This command is used to initialize some elements and make them work properly
+    document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
     taskTableBtnInit();
     $.material.init();
 
@@ -104,16 +116,16 @@ function getKnobsTable(cellDataR) {
 
     //xmlHttpRequest('GET',null,cellDataR,'gtkb');
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-        table.rows[1].cells[i].childNodes[1].childNodes[0].value = ' ';
+        table.rows[1].cells[i].childNodes[1].value = ' ';
         if (cellDataR[i] == 0) {
-            table.rows[1].cells[i].childNodes[1].childNodes[0].value = 'Х';
-            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'red';
+            table.rows[1].cells[i].childNodes[1].value = 'Х';
+            table.rows[1].cells[i].childNodes[1].style.color = 'red';
         } else if (cellDataR[i] == 1) {
-            table.rows[1].cells[i].childNodes[1].childNodes[0].value = '*';
-            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'green';
+            table.rows[1].cells[i].childNodes[1].value = '*';
+            table.rows[1].cells[i].childNodes[1].style.color = 'green';
         } else if (cellDataR[i] == 2) {
-            table.rows[1].cells[i].childNodes[1].childNodes[0].value = 'П';
-            table.rows[1].cells[i].childNodes[1].childNodes[0].style.color = 'blue';
+            table.rows[1].cells[i].childNodes[1].value = 'П';
+            table.rows[1].cells[i].childNodes[1].style.color = 'blue';
         }
     }
 }
