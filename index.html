@@ -18,16 +18,15 @@
 <body>
 
     <!-- Modal -->
-    <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="loading" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Ожидайте...</h4>
+                  <h4 class="modal-title" id="myModalLabel">Ожидайте...</h4>
                 </div>
                 <div class="modal-body">
                     <div class="progress progress-striped active">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
@@ -70,7 +69,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="usr">URL:</label>
-                                <input type="url" class="form-control" id="InpUrl" style="width:100%;" value="http://" onkeyup="saveLastUrl()">
+                                <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://" onkeyup="saveLastUrl()">
                             </div>
 
                         </div>
@@ -84,79 +83,79 @@
                         <div class="panel-body">
                             <div id="dashboardStatusTable" class="container-fluid">
                                 <div class="row th">
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         pH
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         t1
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         t2
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 8
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 7
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 6
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 5
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 4
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 3
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 2
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         PЕЛЕ 1
                                     </div>
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2 col-md-1">
                                         FAN
                                     </div>
                                 </div>
                                 <div class="row td">
-                                    <div id="stVal0" class="col-xs-1">
-                                        pH
+                                    <div id="stVal0" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal1" class="col-xs-1">
-                                        t1
+                                    <div id="stVal1" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal2" class="col-xs-1">
-                                        t2
+                                    <div id="stVal2" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal3" class="col-xs-1">
-                                        r8
+                                    <div id="stVal3" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal4" class="col-xs-1">
-                                        r7
+                                    <div id="stVal4" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal5" class="col-xs-1">
-                                        r6
+                                    <div id="stVal5" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal6" class="col-xs-1">
-                                        r5
+                                    <div id="stVal6" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal7" class="col-xs-1">
-                                        r4
+                                    <div id="stVal7" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal8" class="col-xs-1">
-                                        r3
+                                    <div id="stVal8" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal9" class="col-xs-1">
-                                        r2
+                                    <div id="stVal9" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal10" class="col-xs-1">
-                                        r1
+                                    <div id="stVal10" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <div id="stVal11" class="col-xs-1">
-                                        FAN
+                                    <div id="stVal11" class="col-xs-2 col-md-1">
+                                      <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
@@ -175,12 +174,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td id="c1">&nbsp;</td>
-                                        <td id="c2">&nbsp;</td>
-                                        <td id="c3">&nbsp;</td>
-                                        <td id="c4">&nbsp;</td>
-                                        <td id="c5">&nbsp;</td>
-                                        <td id="c6">&nbsp;</td>
+                                        <td id="c1"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="c2"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="c3"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="c4"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="c5"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="c6"><i class="fa fa-times" aria-hidden="true"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -197,22 +196,22 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td id="d1">&nbsp;</td>
-                                        <td id="d2">&nbsp;</td>
-                                        <td id="d3">&nbsp;</td>
-                                        <td id="d4">&nbsp;</td>
-                                        <td id="d5">&nbsp;</td>
-                                        <td id="d6">&nbsp;</td>
+                                        <td id="d1"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="d2"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="d3"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="d4"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="d5"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                        <td id="d6"><i class="fa fa-times" aria-hidden="true"></i></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="panel-footer">
-                            <input type="button" class="btn btn-primary" id="btnDispl" value="Обновить" autocomplete="off">
+                            <button type="submit" class="btn btn-default" id="btnDispl"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
                             <br />
                             <div class="togglebutton">
                                 <label>
-  	                                  <input type="checkbox" id="GetDisplCheck" autocomplete="off">
+  	                                  <input type="checkbox" id="GetDisplCheck" >
   	                                  &nbsp; Обновлять данные c интервалом в 30 сек
   	                            </label>
                             </div>
@@ -225,7 +224,7 @@
                             <h2>Кнопки</h2>
                         </div>
                         <div class="panel-body">
-                            <table class="table table-bordered " id="knobsEditTable">
+                            <table class="table table-bordered" id="knobsEditTable">
                                 <tr>
                                     <th>LED</th>
                                     <th>PЕЛЕ 8</th>
@@ -239,73 +238,73 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="form-control" style="color:green;" onchange="changeColor(this)" autocomplete="off">
+                                        <select class="form-control" disabled>
                                                <option value="*" style="color:green;">*</option>
                                                <option value="П" style="color:blue;">П</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="font-family:Arial, FontAwesome; color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">&#xf011;</option>
-                                               <option value="*" style="color:green;">&#xf011;</option>
-                                               <option value="П" style="color:blue;">&#xf00d;</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
-                                               <option value="Х" style="color:red;">X</option>
-                                               <option value="*" style="color:green;">*</option>
-                                               <option value="П" style="color:blue;">П</option>
+                                        <select class="form-control" disabled>
+                                          <option value="Х" style="color:red;">&#xf05e; Откл.</option>
+                                          <option value="*" style="color:green;">&#xf011; Авто</option>
+                                          <option value="П" style="color:blue;">&#xf04b; Вкл.</option>
                                         </select>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="panel-footer">
-                            <input type="submit" class="btn btn-default" value="Обновить" onclick="xmlHttpGetRequest('gtkb',getKnobsTable)">
-                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setKnobsTable()">
+                            <button type="submit" class="btn btn-default" id="btnGetKnobsValues"><i class="fa fa-refresh" aria-hidden="true"></i> Обновить</button>
+                            <button type="submit" class="btn btn-primary" id="btnPostKnobsValues" disabled><i class="fa fa-save" aria-hidden="true"></i> Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -341,22 +340,22 @@
                                             <input type="text" class="form-control" value="" readonly autocomplete="off">
                                         </td>
                                         <td>
-                                            <select id="functions" class="form-control" autocomplete="off">
+                                            <select id="functions" class="form-control" >
                                                    <option value="  " disabled selected>&nbsp;&nbsp;</option>
-                               <option value="ТО">Таймер общий (ТО)</option>
-                                               <option value="ТС">Таймер секундный (ТС)</option>
-                                               <option value="ТМ">Таймер минутный (ТМ)</option>
-                                               <option value="НТ">Нагрев (НТ)</option>
-                                               <option value="ОТ">Охлаждение (ОТ)</option>
-                                               <option value="ТН">Таймер недельный (ТН)</option>
-                                               <option value="СО">СО2 (СО)</option>
-                                               <option value="ЦВ">Цикл волны (ЦВ)</option>
-                                               <option value="УВ">Уровень воды (УВ)</option>
+                                                   <option value="ТО">Таймер общий (ТО)</option>
+                                                   <option value="ТС">Таймер секундный (ТС)</option>
+                                                   <option value="ТМ">Таймер минутный (ТМ)</option>
+                                                   <option value="НТ">Нагрев (НТ)</option>
+                                                   <option value="ОТ">Охлаждение (ОТ)</option>
+                                                   <option value="ТН">Таймер недельный (ТН)</option>
+                                                   <option value="СО">СО2 (СО)</option>
+                                                   <option value="ЦВ">Цикл волны (ЦВ)</option>
+                                                   <option value="УВ">Уровень воды (УВ)</option>
                                               </select>
                                         </td>
                                         <td>
 
-                                            <select id="outputs" class="form-control" autocomplete="off">
+                                            <select id="outputs" class="form-control" >
                                  <option value="  " disabled selected>&nbsp;&nbsp;</option>
                                                    <option value="Р1">Реле 1 (Р1)</option>
                                                <option value="Р2">Реле 2 (Р2)</option>
@@ -388,7 +387,7 @@
                                             <input type="number" class="form-control" min="0" max="99" autocomplete="off">
                                         </td>
                                         <td>
-                                            <select id="inputs" class="form-control" autocomplete="off">
+                                            <select id="inputs" class="form-control" >
                                  <option value="" disabled selected>&nbsp;&nbsp;</option>
                                                    <option value="t1">t1</option>
                                                <option value="t2">t2</option>
@@ -398,7 +397,7 @@
                                               </select>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" min="0" max="35" step="0.1" autocomplete="off">
+                                            <input type="number" class="form-control" min="0" max="35" step="0.1" >
                                         </td>
                                     </tr>
                                 </table>
@@ -463,7 +462,7 @@
                                         <input type="number" min="0" max="99" class="form-control" placeholder="0...99">
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                        <select class="form-control" style="color:red;" >
                                                  <option value="Х" style="color:red;">X</option>
                                                  <option value="*" style="color:green;">*</option>
                                           </select>
@@ -499,7 +498,7 @@
                                         <input type="text" placeholder="ЧЧ:ММ" class="form-control">
                                     </td>
                                     <td>
-                                        <select class="form-control" style="color:red;" onchange="changeColor(this)" autocomplete="off">
+                                        <select class="form-control" style="color:red;" >
                                              <option value="Х" style="color:red;">X</option>
                                              <option value="*" style="color:green;">*</option>
                                       </select>

@@ -4,10 +4,19 @@ require('bootstrap-material-design');
 require('vis');
 require('ripples');
 
+var modal = require('./modules/loading');
+
 import './custom.css';
 
-var portString = ":314";
+const EMPTY = '<i class="fa fa-times" data-toggle="tooltip" title="Нет данных" aria-hidden="true"></i>';
+const MANUALY_DISABLED = '<i class="fa fa-ban" data-toggle="tooltip" title="Принудительно выключен" aria-hidden="true"></i>';
+const MANUALY_ENABLED = '<i class="fa fa-play" data-toggle="tooltip" title="Принудительно включен" aria-hidden="true"></i>';
+const AUTO_ON = '<i class="fa fa-check-circle" aria-hidden="true"></i>';
+const AUTO_OFF = '<i class="fa fa-stop" data-toggle="tooltip" title="Выключен" aria-hidden="true"></i>';
+
+const portString = ":314";
 var urlString = "";
+var adress = "";
 var dat;
 var rowIndexTaskTable = 1;
 var dow = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
@@ -24,12 +33,12 @@ var taskTableTxt = [
 //XMLHttpRequest**********************************************************************************
 function xmlHttpPostRequest(messageToSend, messageName) {
     var jsonData = JSON.stringify(messageToSend);
-    var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
+    var adr = adress + "/" + messageName + "/";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onload = function() {
-        $('#loading').modal('hide');
+        modal.hide();
     };
-    $('#loading').modal({backdrop: 'static'});
+    modal.show();
     xmlhttp.open('POST', adr, true);
     xmlhttp.send(jsonData);
     //console.log(jsonData);
@@ -37,23 +46,23 @@ function xmlHttpPostRequest(messageToSend, messageName) {
 }
 
 function xmlHttpGetRequest(messageName, callback) {
-    var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
+    var adr = adress + "/" + messageName + "/";
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onload = function() {
         //console.log(xmlhttp.responseText);
         var message = JSON.parse(xmlhttp.responseText);
-        $('#loading').modal('hide');
+        modal.hide();
         callback(message);
     };
-    $('#loading').modal({backdrop: 'static'});
+    modal.show();
     xmlhttp.open('GET', adr, true);
     xmlhttp.send();
     //console.log(adr);
 }
 //************************************************************************************************
 function clearStatusString() {
-    $('#loading').modal('hide');
+    modal.hide();
 }
 
 //EDIT KNOBS TABLE********************************************************************************
@@ -84,7 +93,6 @@ function setKnobsTable() {
     }
 
     xmlHttpPostRequest(cellData, 'stkb');
-    //xmlHttpRequest('POST',cellData,cellDataR,'stkb');
 }
 
 function getKnobsTable(cellDataR) {
@@ -92,18 +100,23 @@ function getKnobsTable(cellDataR) {
     var table = document.getElementById('knobsEditTable');
 
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-        table.rows[1].cells[i].childNodes[1].value = ' ';
+      var select = table.rows[1].cells[i].childNodes[1].childNodes[0];
         if (cellDataR[i] == 0) {
-            table.rows[1].cells[i].childNodes[1].value = 'Х';
-            table.rows[1].cells[i].childNodes[1].style.color = 'red';
+            select.value = 'Х';
+            select.style.color = 'red';
+            select.disabled = false;
         } else if (cellDataR[i] == 1) {
-            table.rows[1].cells[i].childNodes[1].value = '*';
-            table.rows[1].cells[i].childNodes[1].style.color = 'green';
+            select.value = '*';
+            select.style.color = 'green';
+            select.disabled = false;
         } else if (cellDataR[i] == 2) {
-            table.rows[1].cells[i].childNodes[1].value = 'П';
-            table.rows[1].cells[i].childNodes[1].style.color = 'blue';
+            select.value = 'П';
+            select.style.color = 'blue';
+            select.disabled = false;
         }
     }
+
+    document.getElementById('btnPostKnobsValues').disabled = false;
 }
 
 //************************************************************************************************
@@ -168,7 +181,7 @@ function searchTSReq(task) {
         obj.push('\xa0');
     }
 
-    $('#loading').modal({backdrop: 'static'});
+    modal.show();
 
     xmlhttp.onload = function() {
         if (task == 'tsrc') {
@@ -186,20 +199,18 @@ function searchTSReq(task) {
                 table.rows[1].cells[1].innerHTML = "X";
             }
         }
-        $('#loading').modal('hide');
+        modal.hide();
     }
 
-    var adr = document.getElementById("InpUrl").value + portString + "/" + task + "/";
+    var adr = adress + "/" + task + "/";
     xmlhttp.open("GET", adr, true);
     xmlhttp.send();
-    //console.log(adr);
-
 }
 
 //TEST LEDS*************************************************************************************************
 function testLedsReq(task) {
-    var adr = document.getElementById("InpUrl").value + portString + "/" + task + "/";
-    $('#loading').modal({backdrop: 'static'});
+    var adr = adress + "/" + task + "/";
+    modal.show();
     var xmlhttp = new XMLHttpRequest();
 
     switch (task) {
@@ -214,7 +225,7 @@ function testLedsReq(task) {
     }
 
     xmlhttp.onload = function() {
-        $('#loading').modal('hide');
+        modal.hide();
     };
 
     xmlhttp.open("GET", adr, true);
@@ -225,11 +236,11 @@ function testLedsReq(task) {
 
 //CALIBR PH************************************************************************************************
 function calibrPhReq(task) {
-    var adr = document.getElementById("InpUrl").value + portString + "/" + task + "/";
+    var adr = adress + "/" + task + "/";
     var table = document.getElementById('calibrPhTable');
     var xmlhttp = new XMLHttpRequest();
     var obj = [];
-    $('#loading').modal({backdrop: 'static'});
+    modal.show();
     for (var i = 0; i < 4; i++) {
         obj.push('\xa0');
     }
@@ -258,7 +269,7 @@ function calibrPhReq(task) {
             table.rows[1].cells[2].innerHTML = obj[2];
             table.rows[1].cells[3].innerHTML = phCalibrStatus[obj[3]];
         }
-        $('#loading').modal('hide');
+        modal.hide();
     }
 
     xmlhttp.open("GET", adr, true);
@@ -391,26 +402,26 @@ function getDisplay(cellDataR) {
             case 1:
             case 2:
                 if (cellDataR[i] == -99.9) {
-                    cellDataR[i] = '\xa0';
+                    cellDataR[i] = EMPTY;
                 }
                 tableCell.innerHTML = cellDataR[i]; //0...11
                 tableCell.style.color = "black";
                 break;
             default:
                 if (cellDataR[i] == 0) {
-                    tableCell.innerHTML = 'X';
+                    tableCell.innerHTML = MANUALY_DISABLED;
                     tableCell.style.color = "red";
                 } else if (cellDataR[i] == 2) {
-                    tableCell.innerHTML = 'A';
+                    tableCell.innerHTML = AUTO_ON;
                     tableCell.style.color = "green";
                 } else if (cellDataR[i] == 1) {
-                    tableCell.innerHTML = '*';
-                    tableCell.style.color = "green";
+                    tableCell.innerHTML = AUTO_OFF;
+                    tableCell.style.color = "red";
                 } else if (cellDataR[i] == 3) {
-                    tableCell.innerHTML = 'П';
+                    tableCell.innerHTML = MANUALY_ENABLED;
                     tableCell.style.color = "blue";
                 } else {
-                    tableCell.innerHTML = '\xa0';
+                    tableCell.innerHTML = EMPTY;
                     tableCell.style.color = "black";
                 }
                 break;
@@ -553,7 +564,7 @@ function populateTable(table, rows, cells, content) {
     var rowh = header.insertRow(0);
     for (var i = 0; i < cells; ++i) {
         var cell = rowh.insertCell(i);
-        cell.outerHTML ="<th>" + taskTableHdr[i] + "</th>";
+        cell.outerHTML = "<th>" + taskTableHdr[i] + "</th>";
     }
 
     var body = table.createTBody();
@@ -1515,13 +1526,7 @@ function getTaskTable(dataReceived) {
                 break;
         }
 
-    } //for
-
-    //document.getElementById("addRowBtn").disabled = false;
-    //document.getElementById("delRowBtn").disabled = false;
-    //document.getElementById("editRowBtn").disabled = false;
-    //document.getElementById("saveTableBtn").disabled = false;
-    //var mainTaskTable = document.getElementById('mainTaskTable');
+    }
 
     document.getElementById('mainTaskTable').removeChild(document.getElementById('taskTable'));
     document.getElementById('mainTaskTable').appendChild(populateTable(null, newTableTxt.length, taskTableHdr.length, newTableTxt));
@@ -1529,25 +1534,17 @@ function getTaskTable(dataReceived) {
 
 function xmlHttpPostBinaryRequest(messageToSend, messageName) {
     var xmlHttpRequest = new XMLHttpRequest();
-    var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
+    var adr = adress + "/" + messageName + "/";
 
     xmlHttpRequest.onload = function() {
-        $('#loading').modal('hide');
+        modal.hide();
     };
-    $('#loading').modal({backdrop: 'static'});
+    modal.show();
     xmlHttpRequest.open('POST', adr, true);
     xmlHttpRequest.send(messageToSend);
 }
 
 function taskTableBtnInit() {
-    //document.getElementById("addRowBtn").disabled = true;
-    //document.getElementById("delRowBtn").disabled = true;
-    //document.getElementById("editRowBtn").disabled = true;
-    //document.getElementById("saveTableBtn").disabled = true;
-    var urlString = localStorage.urlLastName;
-    if (urlString !== undefined) {
-        document.getElementById("InpUrl").value = localStorage.urlLastName;
-    }
     var tableEdit = document.getElementById('taskEditTable');
     var cellCount = tableEdit.rows[0].cells.length
     //tableEdit.rows[1].cells[0].innerHTML=1;
@@ -1556,23 +1553,18 @@ function taskTableBtnInit() {
     }
 }
 
-function saveLastUrl() {
-
-    localStorage.urlLastName = document.getElementById("InpUrl").value;
-    //console.log(localStorage.urlLastName);
-    //console.log(document.getElementById("InpUrl").value);
-}
-
 function xmlHttpGetBinaryRequest(messageName, callback) {
     var xmlHttpRequest = new XMLHttpRequest();
-    var adr = document.getElementById("InpUrl").value + portString + "/" + messageName + "/";
-    $('#loading').modal({backdrop: 'static'});
+    var adr = adress + "/" + messageName + "/";
+
+    modal.show();
+
     xmlHttpRequest.open('GET', adr, true);
     xmlHttpRequest.responseType = 'arraybuffer';
     xmlHttpRequest.onload = function() {
         var message = xmlHttpRequest.response;
         callback(message);
-        $('#loading').modal('hide');
+        modal.hide();
     };
     xmlHttpRequest.send();
 }
@@ -1665,20 +1657,43 @@ function populateSelect(cData) {
 }
 
 $(document).ready(function() {
-    // This command is used to initialize some elements and make them work properly
     document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
     taskTableBtnInit();
     $.material.init();
 
+    urlString = localStorage.urlLastName;
+    if (urlString !== undefined) {
+        $('#inURL').val(urlString);
+        adress = urlString + portString;
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+
     $("#btn-load-tasks").click(function() {
-       xmlHttpGetBinaryRequest('gtts', getTaskTable);
+        xmlHttpGetBinaryRequest('gtts', getTaskTable);
+    });
+
+    $('#inURL').keyup(function() {
+        localStorage.urlLastName = this.value;
+    });
+
+    $("#btnGetKnobsValues").click(function() {
+        xmlHttpGetRequest('gtkb', getKnobsTable);
+    });
+
+    $("#btnPostKnobsValues").click(function() {
+        setKnobsTable();
     });
 
     $("#btnDispl").click(function() {
-      xmlHttpGetRequest('gtdl',getDisplay);
+        xmlHttpGetRequest('gtdl', getDisplay);
     })
 
     $("#GetDisplCheck").click(function() {
-      getDisplTimer();
+        getDisplTimer();
     });
+
+    $("select.form-control").change(function() {
+        changeColor(this);
+    })
 });

@@ -18,13 +18,19 @@ body {
 }
 
 div.th div, div.td div {
-  padding: 5px;
+  padding: 8px;
   text-align: center;
-  border: 1px solid lightgrey;
+  border: 1px solid #ddd;
 }
 
 th, div.th div {
   background-color: lightgrey;
+  font-weight: bold;
+  text-align: center;
+}
+
+td {
+  text-align: center;
 }
 
 .anchor {
@@ -143,4 +149,5 @@ i.fa.fa-fan {
 select.form-control {
     text-align: center;
     text-align-last: center;
+    font-family: 'FontAwesome', 'Helvetica';
 }
