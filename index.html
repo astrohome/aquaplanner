@@ -17,7 +17,7 @@
 
 <body>
 
-    <!-- Modal -->
+    <!-- Loading -->
     <div class="modal fade" id="loading" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -30,6 +30,23 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error -->
+    <div class="modal fade" id="error" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title warning" id="errorLabel"><b>Ошибка!</b></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Произошла ошибка при обращении к контроллеру. Проверьте статус подключения к Интернету. </p>
+                    Подробности:
+                    <p id="errorDetails"></p>
+                    <p><b>Перезагрузите страницу</b></p>
                 </div>
             </div>
         </div>
@@ -69,9 +86,8 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="usr">URL:</label>
-                                <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://" onkeyup="saveLastUrl()">
+                                <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://">
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -521,11 +537,11 @@
                         </div>
                         <div class="panel-body">
                             Поиск термодатчиков:
-                            <input type="submit" class="btn btn-success" value="Старт" id="tsrcBtn" onclick="searchTSReq('tsrc')">
-                            <input type="submit" class="btn btn-danger" value="Стоп" id="tstpBtn" onclick="searchTSReq('tstp')">
+                            <button type="submit" class="btn btn-success" id="btnStartSearchTSensor"><i class="fa fa-search"></i> Старт</button>
+                            <button type="submit" class="btn btn-danger" id="btnStopSearchTSensor" disabled><i class="fa fa-stop"></i> Стоп</button>
 
                             <br /> Результаты:
-                            <table class="table table-bordered " id="termosensTable">
+                            <table class="table table-bordered" id="termosensTable">
                                 <tr>
                                     <th>t1</th>
                                     <th>t2</th>

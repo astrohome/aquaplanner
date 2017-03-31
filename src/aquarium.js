@@ -8,6 +8,10 @@ var modal = require('./modules/loading');
 
 import './custom.css';
 
+const POST = "POST";
+const GET = "GET";
+const LOADING = "loading";
+const ERROR = "error";
 const EMPTY = '<i class="fa fa-times" data-toggle="tooltip" title="Нет данных"></i>';
 const MANUALY_DISABLED = '<i class="fa fa-ban" data-toggle="tooltip" title="Принудительно выключен"></i>';
 const MANUALY_ENABLED = '<i class="fa fa-play" data-toggle="tooltip" title="Принудительно включен"></i>';
@@ -30,37 +34,43 @@ var taskTableTxt = [
     ["1", "ТО", "Р1", "17:30", "20:40", "", "", "", ""]
 ];
 
-//XMLHttpRequest**********************************************************************************
-function xmlHttpPostRequest(messageToSend, messageName) {
+function httpPostRequest(messageToSend, messageName) {
     var jsonData = JSON.stringify(messageToSend);
     var adr = adress + "/" + messageName + "/";
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onload = function() {
-        modal.hide();
-    };
-    modal.show();
-    xmlhttp.open('POST', adr, true);
-    xmlhttp.send(jsonData);
+
+    sendRequest(POST, adr, jsonData);
+}
+
+function sendRequest(type, url, data, callback) {
+  modal.show(LOADING);
+  $.ajax({
+      url: url,
+      type: type,
+      contentType: "text/plain;charset=UTF-8",
+      data: data,
+      timeout: 10000,
+      success: function(response) {
+          if (callback)
+            callback(response);
+          modal.hide();
+      },
+      error: function(x, t, m) {
+          modal.hide();
+          if (t === "timeout") {
+              modal.showWithDetails(ERROR, 'errorDetails',
+            'Ответ не получен на протяжении 10 секунд. Проверьте адрес. Проверьте WiFi модуль контроллера.');
+          } else {
+              modal.showWithDetails(ERROR);
+          }
+      }
+  });
 }
 
 function httpGetRequest(messageName, callback) {
     var adr = adress + "/" + messageName + "/";
-
-    modal.show();
-    $.get(adr,
-        // success
-        function(data) {
-            callback(data);
-            modal.hide();
-        })
-        .fail(function() {
-            modal.hide();
-        });
+    sendRequest(GET, adr, null, callback);
 }
 //************************************************************************************************
-function clearStatusString() {
-    modal.hide();
-}
 
 //EDIT KNOBS TABLE********************************************************************************
 function setKnobsTable() {
@@ -81,7 +91,7 @@ function setKnobsTable() {
         }
     }
 
-    xmlHttpPostRequest(cellData, 'stkb');
+    httpPostRequest(cellData, 'stkb');
 }
 
 function getKnobsTable(cellDataR) {
@@ -121,7 +131,7 @@ function setFanTable() {
     } else {
         cellData[1] = mode;
     }
-    xmlHttpPostRequest(cellData, 'stfn');
+    httpPostRequest(cellData, 'stfn');
 }
 
 function getFanTable(cellDataR) {
@@ -149,43 +159,33 @@ function getFanTable(cellDataR) {
 
 //SEARCH TERMOSENSORS******************************************************************************
 function searchTSReq(task) {
-    var xmlhttp = new XMLHttpRequest();
-    var obj = [];
-    for (var i = 0; i < 2; i++) {
-        obj.push('\xa0');
+    if (task == 'tsrc') {
+      httpGetRequest(task, showSensorSearchResults);
+    } else {
+      httpGetRequest(task);
     }
+}
 
-    modal.show();
+function showSensorSearchResults(data) {
+  var table = document.getElementById('termosensTable');
+  if (data[0] != -99.9) {
+      table.rows[1].cells[0].innerHTML = data[0];
+  } else {
+      table.rows[1].cells[0].innerHTML = EMPTY;
+  }
 
-    xmlhttp.onload = function() {
-        if (task == 'tsrc') {
-            obj = JSON.parse(xmlhttp.responseText);
-            var table = document.getElementById('termosensTable');
-            if (obj[0] != -99.9) {
-                table.rows[1].cells[0].innerHTML = obj[0];
-            } else {
-                table.rows[1].cells[0].innerHTML = "X";
-            }
+  if (data[1] != -99.9) {
+      table.rows[1].cells[1].innerHTML = data[1];
+  } else {
+      table.rows[1].cells[1].innerHTML = EMPTY;
+  }
 
-            if (obj[1] != -99.9) {
-                table.rows[1].cells[1].innerHTML = obj[1];
-            } else {
-                table.rows[1].cells[1].innerHTML = "X";
-            }
-        }
-        modal.hide();
-    }
-
-    var adr = adress + "/" + task + "/";
-    xmlhttp.open("GET", adr, true);
-    xmlhttp.send();
+  $('#btnStopSearchTSensor').disabled = false;
 }
 
 //TEST LEDS*************************************************************************************************
 function testLedsReq(task) {
     var adr = adress + "/" + task + "/";
-    modal.show();
-    var xmlhttp = new XMLHttpRequest();
 
     switch (task) {
         case "gttb":
@@ -196,14 +196,9 @@ function testLedsReq(task) {
             document.getElementById("endLedTestBtn").disabled = true;
             document.getElementById("beginLedTestBtn").disabled = false;
             break;
-    }
+   }
 
-    xmlhttp.onload = function() {
-        modal.hide();
-    };
-
-    xmlhttp.open("GET", adr, true);
-    xmlhttp.send();
+    httpGetRequest(adr);
 }
 //*********************************************************************************************************
 
@@ -213,7 +208,7 @@ function calibrPhReq(task) {
     var table = document.getElementById('calibrPhTable');
     var xmlhttp = new XMLHttpRequest();
     var obj = [];
-    modal.show();
+    modal.show(LOADING);
     for (var i = 0; i < 4; i++) {
         obj.push('\xa0');
     }
@@ -286,7 +281,7 @@ function setMoonLightTable() {
     reqData[3] = parseInt(cellData[1].substr(3, 2));
     reqData[4] = mode;
 
-    xmlHttpPostRequest(reqData, 'stml');
+    httpPostRequest(reqData, 'stml');
 }
 
 function getMoonLightTable(cellDataR) {
@@ -358,7 +353,7 @@ function setDate() {
     cellData.push(dat.getDate());
     cellData.push(dat.getMonth() + 1);
     cellData.push(dat.getFullYear() - 2000);
-    xmlHttpPostRequest(cellData, 'stdt');
+    httpPostRequest(cellData, 'stdt');
 }
 //*****************************************************************************
 
@@ -1512,7 +1507,7 @@ function xmlHttpPostBinaryRequest(messageToSend, messageName) {
     xmlHttpRequest.onload = function() {
         modal.hide();
     };
-    modal.show();
+    modal.show(LOADING);
     xmlHttpRequest.open('POST', adr, true);
     xmlHttpRequest.send(messageToSend);
 }
@@ -1530,7 +1525,7 @@ function xmlHttpGetBinaryRequest(messageName, callback) {
     var xmlHttpRequest = new XMLHttpRequest();
     var adr = adress + "/" + messageName + "/";
 
-    modal.show();
+    modal.show(LOADING);
 
     xmlHttpRequest.open('GET', adr, true);
     xmlHttpRequest.responseType = 'arraybuffer';
@@ -1648,6 +1643,8 @@ $(document).ready(function() {
 
     $('#inURL').keyup(function() {
         localStorage.urlLastName = this.value;
+        urlString = localStorage.urlLastName;
+        adress = urlString + portString;
     });
 
     $("#btnGetKnobsValues").click(function() {
@@ -1672,6 +1669,14 @@ $(document).ready(function() {
 
     $("#bntPostMoonValues").click(function() {
         setMoonLightTable();
+    });
+
+    $("#btnStartSearchTSensor").click(function() {
+        searchTSReq('tsrc');
+    });
+
+    $("#btnStopSearchTSensor").click(function() {
+        searchTSReq('tstp');
     });
 
     $("#btnDispl").click(function() {
