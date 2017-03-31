@@ -416,11 +416,11 @@
                                 </table>
                             </div>
                             <div class="panel-footer">
-                                <button class="btn btn-success" id="addRowBtn" onclick="addRow('taskTable',rowIndexTaskTable,taskTableTxt)"><i class="fa fa-plus"></i> Добавить</button>
-                                <button class="btn btn-danger" id="delRowBtn" onclick="delRow('taskTable',rowIndexTaskTable)"><i class="fa fa-trash"></i> Удалить</button>
-                                <button class="btn btn-warning" id="editRowBtn" onclick="editRow('taskTable',taskTableHdr.length,taskTableTxt)"><i class="fa fa-pencil"></i> Редактировать</button>
-                                <button class="btn btn-primary" id="saveTableBtn" onclick="setTaskTable()"><i class="fa fa-floppy-o"></i> Сохранить</button>
-                                <button class="btn btn-default" id="btn-load-tasks"><i class="fa fa-refresh"></i> Обновить</button>
+                                <button class="btn btn-success" id="btnAddRow"><i class="fa fa-plus"></i> Добавить</button>
+                                <button class="btn btn-danger" id="btnDeleteRow"><i class="fa fa-trash"></i> Удалить</button>
+                                <button class="btn btn-warning" id="btnEditRow"><i class="fa fa-pencil"></i> Редактировать</button>
+                                <button class="btn btn-primary" id="btnPostTasks"><i class="fa fa-floppy-o"></i> Сохранить</button>
+                                <button class="btn btn-default" id="btnGetTasks"><i class="fa fa-refresh"></i> Обновить</button>
                             </div>
                         </div>
                     </div>
@@ -455,7 +455,7 @@
                             </table>
                         </div>
                         <div class="panel-footer">
-                            <input type="submit" class="btn btn-primary" value="Сохранить" onclick="setDate()">
+                            <button id="btnPostDate" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -563,25 +563,22 @@
                             <section>
                                 <span>Чтобы начать процесс калибровки датчика нажмите кнопку
                               Старт.</span>
-                                <button type="submit" class="btn btn-success" id="strPhBtn" onclick="calibrPhReq('cphb')"><i class="fa fa-play"></i> Старт</button>
+                                <button type="submit" class="btn btn-success" id="btnStartPhCalibration"><i class="fa fa-play"></i> Старт</button>
                             </section>
 
                             <section>
-                                <span>Поместите датчик в буферный раствор с рН=4,0. По истечении 1 мин. нажмите кнопку
-                              Готово рН4.</span>
-                                <input type="submit" class="btn btn-success" value="Готово рН4" id="rdyPh4Btn" disabled="true" onclick="calibrPhReq('cph4')">
+                                <span>Поместите датчик в буферный раствор с рН=4,0. По истечении 1 мин. нажмите кнопку Готово рН4.</span>
+                                <input type="submit" class="btn btn-success" value="Готово рН4" id="btnReadyPh4" disabled="true">
                             </section>
 
                             <section>
-                                <span>Поместите датчик в буферный раствор с рН=7,0. По истечении 1 мин. нажмите кнопку
-                             Готово рН7.</span>
-                                <input type="submit" class="btn btn-success" value="Готово рН7" id="rdyPh7Btn" disabled="true" onclick="calibrPhReq('cph7')">
+                                <span>Поместите датчик в буферный раствор с рН=7,0. По истечении 1 мин. нажмите кнопку Готово рН7.</span>
+                                <input type="submit" class="btn btn-success" value="Готово рН7" id="btnReadyPh7" disabled="true">
                             </section>
 
                             <section>
-                                <span>Чтобы закончить процесс калибровки датчика нажмите кнопку
-                             Стоп.</span>
-                                <button type="submit" class="btn btn-danger" id="stpPhBtn" onclick="calibrPhReq('cphe')"><i class="fa fa-stop"></i> Стоп</button>
+                                <span>Чтобы закончить процесс калибровки датчика нажмите кнопку Стоп.</span>
+                                <button type="submit" class="btn btn-danger" id="btnStopPhCalibration"><i class="fa fa-stop"></i> Стоп</button>
                             </section>
 
                             <br/><br/>
@@ -610,12 +607,12 @@
                         <div class="panel-body">
                             <section>
                                 <span>Чтобы начать тестирование подсветки нажмите кнопку Старт.</span>
-                                <button type="submit" class="btn btn-success" id="beginLedTestBtn" onclick="testLedsReq('gttb')"><i class="fa fa-play"></i> Старт</button>
+                                <button type="submit" class="btn btn-success" id="btnStartLedTest"><i class="fa fa-play"></i> Старт</button>
                             </section>
 
                             <section>
                                 <span>Чтобы выйти из процесса тестирования подсветки нажмите кнопку Стоп.</span>
-                                <button type="submit" class="btn btn-danger" id="endLedTestBtn" disabled="true" onclick="testLedsReq('gtte')"><i class="fa fa-stop"></i> Стоп</button>
+                                <button type="submit" class="btn btn-danger" id="btnEndLedTest" disabled><i class="fa fa-stop"></i> Стоп</button>
                             </section>
                         </div>
                     </div>
@@ -623,8 +620,6 @@
             </div>
         </div>
     </div>
-    </div>
-
 
 </body>
 

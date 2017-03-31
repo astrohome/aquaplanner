@@ -34,11 +34,16 @@ var taskTableTxt = [
     ["1", "ТО", "Р1", "17:30", "20:40", "", "", "", ""]
 ];
 
-function httpPostRequest(messageToSend, messageName) {
-    var jsonData = JSON.stringify(messageToSend);
+function httpPostRequest(messageToSend, messageName, isBinary) {
+    var data;
+    if (isBinary) {
+      data = messageToSend;
+    } else {
+      data = JSON.stringify(messageToSend);
+    }
     var adr = adress + "/" + messageName + "/";
 
-    sendRequest(POST, adr, jsonData);
+    sendRequest(POST, adr, data);
 }
 
 function sendRequest(type, url, data, callback) {
@@ -48,11 +53,13 @@ function sendRequest(type, url, data, callback) {
       type: type,
       contentType: "text/plain;charset=UTF-8",
       data: data,
+      dataType: "text",
+      processData: false,
       timeout: 10000,
       success: function(response) {
-          if (callback)
-            callback(response);
-          modal.hide();
+        if (response && callback)
+            callback($.parseJSON(response));
+        modal.hide();
       },
       error: function(x, t, m) {
           modal.hide();
@@ -161,8 +168,10 @@ function getFanTable(cellDataR) {
 function searchTSReq(task) {
     if (task == 'tsrc') {
       httpGetRequest(task, showSensorSearchResults);
+      document.getElementById('btnStopSearchTSensor').disabled = false;
     } else {
       httpGetRequest(task);
+      document.getElementById('btnStopSearchTSensor').disabled = true;
     }
 }
 
@@ -1269,7 +1278,7 @@ function setTaskTable() {
         }
     } // fill ArrayBuffer
 
-    xmlHttpPostBinaryRequest(bufferTaskTable, 'stts');
+    httpPostRequest(bufferTaskTable, 'stts', true);
 }
 
 function getTaskTable(dataReceived) {
@@ -1500,18 +1509,6 @@ function getTaskTable(dataReceived) {
     document.getElementById('mainTaskTable').appendChild(populateTable(null, newTableTxt.length, taskTableHdr.length, newTableTxt));
 }
 
-function xmlHttpPostBinaryRequest(messageToSend, messageName) {
-    var xmlHttpRequest = new XMLHttpRequest();
-    var adr = adress + "/" + messageName + "/";
-
-    xmlHttpRequest.onload = function() {
-        modal.hide();
-    };
-    modal.show(LOADING);
-    xmlHttpRequest.open('POST', adr, true);
-    xmlHttpRequest.send(messageToSend);
-}
-
 function taskTableBtnInit() {
     var tableEdit = document.getElementById('taskEditTable');
     var cellCount = tableEdit.rows[0].cells.length
@@ -1637,8 +1634,24 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    $("#btn-load-tasks").click(function() {
+    $("#btnGetTasks").click(function() {
         xmlHttpGetBinaryRequest('gtts', getTaskTable);
+    });
+
+    $("#btnPostTasks").click(function() {
+        setTaskTable();
+    });
+
+    $("#btnAddRow").click(function() {
+        addRow('taskTable',rowIndexTaskTable,taskTableTxt);
+    });
+
+    $("#btnDeleteRow").click(function() {
+        delRow('taskTable', rowIndexTaskTable);
+    });
+
+    $("#btnEditRow").click(function() {
+        editRow('taskTable', taskTableHdr.length, taskTableTxt);
     });
 
     $('#inURL').keyup(function() {
@@ -1663,6 +1676,26 @@ $(document).ready(function() {
         setFanTable();
     });
 
+    $("#btnPostDate").click(function() {
+        setDate();
+    });
+
+    $("#btnStartPhCalibration").click(function() {
+        calibrPhReq('cphb');
+    });
+
+    $("#btnReadyPh4").click(function() {
+        calibrPhReq('cph4');
+    });
+
+    $("#btnReadyPh7").click(function() {
+        calibrPhReq('cph7');
+    });
+
+    $("#btnStopPhCalibration").click(function() {
+        calibrPhReq('cphe');
+    });
+
     $("#bntGetMoonValues").click(function() {
         httpGetRequest('gtml', getMoonLightTable);
     });
@@ -1677,6 +1710,14 @@ $(document).ready(function() {
 
     $("#btnStopSearchTSensor").click(function() {
         searchTSReq('tstp');
+    });
+
+    $("#btnStartLedTest").click(function() {
+        testLedsReq('gttb');
+    });
+
+    $("#btnEndLedTest").click(function() {
+        testLedsReq('gtte');
     });
 
     $("#btnDispl").click(function() {
