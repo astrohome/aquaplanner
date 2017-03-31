@@ -43,18 +43,19 @@ function xmlHttpPostRequest(messageToSend, messageName) {
     xmlhttp.send(jsonData);
 }
 
-function xmlHttpGetRequest(messageName, callback) {
+function httpGetRequest(messageName, callback) {
     var adr = adress + "/" + messageName + "/";
-    var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onload = function() {
-        var message = JSON.parse(xmlhttp.responseText);
-        modal.hide();
-        callback(message);
-    };
     modal.show();
-    xmlhttp.open('GET', adr, true);
-    xmlhttp.send();
+    $.get(adr,
+        // success
+        function(data) {
+            callback(data);
+            modal.hide();
+        })
+        .fail(function() {
+            modal.hide();
+        });
 }
 //************************************************************************************************
 function clearStatusString() {
@@ -203,7 +204,6 @@ function testLedsReq(task) {
 
     xmlhttp.open("GET", adr, true);
     xmlhttp.send();
-    //console.log(adr);
 }
 //*********************************************************************************************************
 
@@ -256,45 +256,41 @@ function setMoonLightTable() {
     var cellData = ["", "", "", ];
     var reqData = [, , , , ];
     var cellDataR = [];
-    var pattern = [/(^([0-1][0-9]|2[0-3]):[0-5][0-9]$)/, /^(Х|\*)$/];
-    //var messageName = "dfan";
-    var table = document.getElementById('moonLightTable');
-    //var pattern = /(^[0-9]$)|(^[0-9][0-9]$)/;
-    cellData[0] = table.rows[1].cells[0].childNodes[1].childNodes[0].value;
-    if (!pattern[0].test(cellData[0])) {
+    var pattern = new RegExp(/([01]\d|2[0-3]):?[0-5]\d/);
+
+    var startHour = document.getElementById('inMoonStartHour').value;
+    var endHour = document.getElementById('inMoonEndHour').value;
+    var mode = parseInt(document.getElementById('inMoonMode').value);
+
+
+    if (pattern.exec(startHour) == null) {
         alert("Время ВКЛ введено неверно. (ЧЧ:ММ)");
         return;
     }
-    cellData[1] = table.rows[1].cells[1].childNodes[1].childNodes[0].value;
-    if (!pattern[0].test(cellData[1])) {
+    cellData[0] = startHour;
+
+    if (pattern.exec(endHour) == null) {
         alert("Время ВЫКЛ введено неверно. (ЧЧ:ММ)");
         return;
     }
-    cellData[2] = table.rows[1].cells[2].childNodes[1].value;
-    if (!pattern[1].test(cellData[2])) {
-        alert("Статус введен неверно. (*,X)");
+    cellData[1] = endHour;
+
+    if (isNaN(mode) || mode < 0 || mode > 1) {
+        alert("Статус введен неверно.");
         return;
     }
+
     reqData[0] = parseInt(cellData[0].substr(0, 2));
     reqData[1] = parseInt(cellData[0].substr(3, 2));
     reqData[2] = parseInt(cellData[1].substr(0, 2));
     reqData[3] = parseInt(cellData[1].substr(3, 2));
-    if (cellData[2] == "Х") {
-        reqData[4] = 0;
-    } else if (cellData[2] == "*") {
-        reqData[4] = 1;
-    }
+    reqData[4] = mode;
 
-    //console.log(cellData);
-    //xmlHttpRequest('POST',reqData,cellDataR,'stml');
     xmlHttpPostRequest(reqData, 'stml');
-
 }
 
 function getMoonLightTable(cellDataR) {
     var cellData = ["", "", "", ];
-
-    var table = document.getElementById('moonLightTable');
 
     if (!isNaN(cellDataR[0])) {
         if (cellDataR[0] < 9) {
@@ -320,17 +316,21 @@ function getMoonLightTable(cellDataR) {
         }
 
     }
-    table.rows[1].cells[0].childNodes[1].childNodes[0].value = cellData[0];
-    table.rows[1].cells[1].childNodes[1].childNodes[0].value = cellData[1];
 
-    if (cellDataR[4] == 1) {
-        cellData[2] = "*";
-        table.rows[1].cells[2].childNodes[1].style.color = "green";
-    } else if (cellDataR[4] == 0) {
-        cellData[2] = "Х";
-        table.rows[1].cells[2].childNodes[1].style.color = "red";
-    }
-    table.rows[1].cells[2].childNodes[1].value = cellData[2];
+    var startHour = document.getElementById('inMoonStartHour');
+    var endHour = document.getElementById('inMoonEndHour');
+    var mode = document.getElementById('inMoonMode');
+    var saveButton = document.getElementById('bntPostMoonValues');
+
+    startHour.value = cellData[0];
+    endHour.value = cellData[1];
+    mode.value = cellDataR[4];
+    changeColor(mode);
+
+    startHour.disabled = false;
+    endHour.disabled = false;
+    mode.disabled = false;
+    saveButton.disabled = false;
 }
 //*********************************************************************************************
 
@@ -427,7 +427,7 @@ function xhrTimer(item) {
     if (chk == true) {
         if (item.id == "d_1") {
             timerXhrTask = setInterval(function() {
-                xmlHttpGetRequest('gtdl', getDisplay);
+                httpGetRequest('gtdl', getDisplay);
             }, 30000);
         } else {
             clearInterval(timerXhrTask);
@@ -442,7 +442,7 @@ function getDisplTimer() {
     if (chk == true) {
         document.getElementById("btnDispl").disabled = true;
         timerXhrTask = setInterval(function() {
-            xmlHttpGetRequest('gtdl', getDisplay);
+            httpGetRequest('gtdl', getDisplay);
         }, 30000);
     } else {
         document.getElementById("btnDispl").disabled = false;
@@ -530,7 +530,7 @@ function populateTable(table, rows, cells, content) {
     var is_func = (typeof content === 'function');
     if (!table)
         table = document.createElement('table');
-    table.className = "table table-bordered";
+    table.className = "table table-bordered table-striped";
     table.id = "taskTable";
 
     var header = table.createTHead();
@@ -1651,23 +1651,31 @@ $(document).ready(function() {
     });
 
     $("#btnGetKnobsValues").click(function() {
-        xmlHttpGetRequest('gtkb', getKnobsTable);
+        httpGetRequest('gtkb', getKnobsTable);
     });
 
     $("#btnPostKnobsValues").click(function() {
         setKnobsTable();
     });
 
-    $("#btnGetFanValues").click(function(){
-        xmlHttpGetRequest('gtfn', getFanTable);
+    $("#btnGetFanValues").click(function() {
+        httpGetRequest('gtfn', getFanTable);
     });
 
-    $("#btnPostFanValues").click(function(){
+    $("#btnPostFanValues").click(function() {
         setFanTable();
     });
 
+    $("#bntGetMoonValues").click(function() {
+        httpGetRequest('gtml', getMoonLightTable);
+    });
+
+    $("#bntPostMoonValues").click(function() {
+        setMoonLightTable();
+    });
+
     $("#btnDispl").click(function() {
-        xmlHttpGetRequest('gtdl', getDisplay);
+        httpGetRequest('gtdl', getDisplay);
     })
 
     $("#GetDisplCheck").click(function() {
