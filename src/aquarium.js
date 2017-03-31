@@ -8,11 +8,11 @@ var modal = require('./modules/loading');
 
 import './custom.css';
 
-const EMPTY = '<i class="fa fa-times" data-toggle="tooltip" title="Нет данных" aria-hidden="true"></i>';
-const MANUALY_DISABLED = '<i class="fa fa-ban" data-toggle="tooltip" title="Принудительно выключен" aria-hidden="true"></i>';
-const MANUALY_ENABLED = '<i class="fa fa-play" data-toggle="tooltip" title="Принудительно включен" aria-hidden="true"></i>';
-const AUTO_ON = '<i class="fa fa-check-circle" aria-hidden="true"></i>';
-const AUTO_OFF = '<i class="fa fa-stop" data-toggle="tooltip" title="Выключен" aria-hidden="true"></i>';
+const EMPTY = '<i class="fa fa-times" data-toggle="tooltip" title="Нет данных"></i>';
+const MANUALY_DISABLED = '<i class="fa fa-ban" data-toggle="tooltip" title="Принудительно выключен"></i>';
+const MANUALY_ENABLED = '<i class="fa fa-play" data-toggle="tooltip" title="Принудительно включен"></i>';
+const AUTO_ON = '<i class="fa fa-check-circle" data-toggle="tooltip" title="Авто - Включен"></i>';
+const AUTO_OFF = '<i class="fa fa-stop" data-toggle="tooltip" title="Авто - Выключен"></i>';
 
 const portString = ":314";
 var urlString = "";
@@ -41,8 +41,6 @@ function xmlHttpPostRequest(messageToSend, messageName) {
     modal.show();
     xmlhttp.open('POST', adr, true);
     xmlhttp.send(jsonData);
-    //console.log(jsonData);
-    //console.log(adr);
 }
 
 function xmlHttpGetRequest(messageName, callback) {
@@ -50,7 +48,6 @@ function xmlHttpGetRequest(messageName, callback) {
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onload = function() {
-        //console.log(xmlhttp.responseText);
         var message = JSON.parse(xmlhttp.responseText);
         modal.hide();
         callback(message);
@@ -58,7 +55,6 @@ function xmlHttpGetRequest(messageName, callback) {
     modal.show();
     xmlhttp.open('GET', adr, true);
     xmlhttp.send();
-    //console.log(adr);
 }
 //************************************************************************************************
 function clearStatusString() {
@@ -69,26 +65,18 @@ function clearStatusString() {
 function setKnobsTable() {
     var cellData = [];
     var table = document.getElementById('knobsEditTable');
-    var cellDataR = [];
 
     for (var i = 0; i < table.rows[0].cells.length; i++) {
         cellData.push();
     }
-    var pattern = /^(Х|\*|П)$/;
 
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-        var cell = table.rows[1].cells[i].childNodes[1].childNodes[0].value;
-        if (!pattern.test(cell)) {
-            alert("Статус кнопки " + table.rows[0].cells[i].innerHTML + " введен неверно. (*,Х,П)");
+        var cell = parseInt(table.rows[1].cells[i].childNodes[1].childNodes[0].value);
+        if (isNaN(cell) || (cell != 0 && cell != 1 && cell != 2)) {
+            alert("Статус кнопки номер " + i + " введен неверно.");
             return;
         } else {
-            if (cell == 'Х') {
-                cellData[i] = 0;
-            } else if (cell == '*') {
-                cellData[i] = 1;
-            } else if (cell == 'П') {
-                cellData[i] = 2;
-            }
+            cellData[i] = cell;
         }
     }
 
@@ -96,24 +84,13 @@ function setKnobsTable() {
 }
 
 function getKnobsTable(cellDataR) {
-
     var table = document.getElementById('knobsEditTable');
 
     for (var i = 0; i < table.rows[0].cells.length; i++) {
-      var select = table.rows[1].cells[i].childNodes[1].childNodes[0];
-        if (cellDataR[i] == 0) {
-            select.value = 'Х';
-            select.style.color = 'red';
-            select.disabled = false;
-        } else if (cellDataR[i] == 1) {
-            select.value = '*';
-            select.style.color = 'green';
-            select.disabled = false;
-        } else if (cellDataR[i] == 2) {
-            select.value = 'П';
-            select.style.color = 'blue';
-            select.disabled = false;
-        }
+        var select = table.rows[1].cells[i].childNodes[1].childNodes[0];
+        select.value = cellDataR[i];
+        select.disabled = false;
+        changeColor(select);
     }
 
     document.getElementById('btnPostKnobsValues').disabled = false;
@@ -124,51 +101,47 @@ function getKnobsTable(cellDataR) {
 //EDIT FAN TABLE***********************************************************************************
 function setFanTable() {
     var cellData = [, ];
-    var cellDataR = [, ];
-    var pattern = [/(^[0-9]$)|(^[0-9][0-9]$)/, /^(Х|\*)$/];
-    var string = "";
 
-    var table = document.getElementById('editFan');
-    string = table.rows[1].cells[0].childNodes[1].childNodes[0].value;
-    if (!pattern[0].test(string)) {
+    var input = document.getElementById('inFanPower');
+    var select = document.getElementById('sltFanMod');
+
+    var power = parseInt(input.value);
+    if (isNaN(power) || power < 0 || power > 99) {
         alert("Мощность введена неверно. (0-99)");
         return;
     } else {
-        cellData[0] = parseInt(string);
+        cellData[0] = parseInt(power);
     }
 
-    string = table.rows[1].cells[1].childNodes[1].value;
-    if (!pattern[1].test(string)) {
-        alert("Статус введен неверно. (Х или *)");
+    var mode = parseInt(select.value);
+    if (isNaN(mode) || (mode != 0 && mode != 1)) {
+        alert("Статус введен неверно.");
         return;
     } else {
-        if (string == 'Х') {
-            cellData[1] = 0;
-        } else if (string == '*') {
-            cellData[1] = 1;
-        }
+        cellData[1] = mode;
     }
     xmlHttpPostRequest(cellData, 'stfn');
 }
 
 function getFanTable(cellDataR) {
 
-    var table = document.getElementById('editFan');
+    var input = document.getElementById('inFanPower');
+    var select = document.getElementById('sltFanMod');
 
-    table.rows[1].cells[0].childNodes[1].childNodes[0].value = ' ';
+    input.value = null;
     if (!isNaN(cellDataR[0])) {
-        table.rows[1].cells[0].childNodes[1].childNodes[0].value = cellDataR[0];
+        input.value = cellDataR[0];
     }
 
-    table.rows[1].cells[1].childNodes[1].value = ' ';
+    select.value = cellDataR[1];
     if (cellDataR[1] == 0) {
-        table.rows[1].cells[1].childNodes[1].value = 'Х';
-        table.rows[1].cells[1].childNodes[1].style.color = "red";
+        select.style.color = "red";
     } else if (cellDataR[1] == 1) {
-        table.rows[1].cells[1].childNodes[1].value = '*';
-        table.rows[1].cells[1].childNodes[1].style.color = "green";
+        select.style.color = "green";
     }
 
+    select.disabled = false;
+    document.getElementById('btnPostFanValues').disabled = false;
 }
 
 //*************************************************************************************************
@@ -1585,13 +1558,13 @@ function digitToTimeView(digit) {
 
 function changeColor(selectItem) {
     switch (selectItem.value) {
-        case "Х":
+        case "0":
             selectItem.style.color = "red";
             break;
-        case "*":
+        case "1":
             selectItem.style.color = "green";
             break;
-        case "П":
+        case "2":
             selectItem.style.color = "blue";
             break;
     }
@@ -1683,6 +1656,14 @@ $(document).ready(function() {
 
     $("#btnPostKnobsValues").click(function() {
         setKnobsTable();
+    });
+
+    $("#btnGetFanValues").click(function(){
+        xmlHttpGetRequest('gtfn', getFanTable);
+    });
+
+    $("#btnPostFanValues").click(function(){
+        setFanTable();
     });
 
     $("#btnDispl").click(function() {
