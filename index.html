@@ -11,8 +11,6 @@
     <link rel="shortcut icon" href="favicon.ico" />
 
     <link href="dist/styles.css" rel="stylesheet" type="text/css">
-
-    <script src="dist/bundle.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -329,7 +327,7 @@
                             <div class="panel-heading">
                                 <h2>Настройка Задач</h2></div>
                             <div class="panel-body">
-                                <div id="mainTaskTable">
+                                <div class="table-responsive" id="mainTaskTable">
                                 </div>
                             </div>
                         </div>
@@ -337,6 +335,7 @@
                             <div class="panel-heading">
                                 <h2>Строка редактирования задач</h2></div>
                             <div class="panel-body">
+                              <div class="table-responsive">
                                 <table class="table table-bordered" id="taskEditTable">
                                     <caption style="font-size:1.5em;">Строка редактирования задач.</caption>
                                     <tr>
@@ -414,6 +413,7 @@
                                         </td>
                                     </tr>
                                 </table>
+                              </div>
                             </div>
                             <div class="panel-footer">
                                 <button class="btn btn-success" id="btnAddRow"><i class="fa fa-plus"></i> Добавить</button>
@@ -620,7 +620,7 @@
             </div>
         </div>
     </div>
-
+    <script src="dist/bundle.js" charset="utf-8"></script>
 </body>
 
 </html>

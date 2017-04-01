@@ -213,45 +213,40 @@ function testLedsReq(task) {
 
 //CALIBR PH************************************************************************************************
 function calibrPhReq(task) {
-    var adr = adress + "/" + task + "/";
     var table = document.getElementById('calibrPhTable');
-    var xmlhttp = new XMLHttpRequest();
+
     var obj = [];
-    modal.show(LOADING);
     for (var i = 0; i < 4; i++) {
         obj.push('\xa0');
     }
 
     switch (task) {
         case "cphb":
-            document.getElementById("rdyPh4Btn").disabled = false;
+            document.getElementById("btnReadyPh4").disabled = false;
             break;
         case "cph4":
-            document.getElementById("rdyPh4Btn").disabled = true;
-            document.getElementById("rdyPh7Btn").disabled = false;
+            document.getElementById("btnReadyPh4").disabled = true;
+            document.getElementById("btnReadyPh7").disabled = false;
             break;
         case "cph7":
-            document.getElementById("rdyPh7Btn").disabled = true;
+            document.getElementById("btnReadyPh7").disabled = true;
             break;
         case "cphe":
             break;
 
     }
 
-    xmlhttp.onload = function(e) {
-        if (task == 'cph7') {
-            obj = JSON.parse(xmlhttp.responseText);
-            table.rows[1].cells[0].innerHTML = obj[0];
-            table.rows[1].cells[1].innerHTML = obj[1];
-            table.rows[1].cells[2].innerHTML = obj[2];
-            table.rows[1].cells[3].innerHTML = phCalibrStatus[obj[3]];
-        }
-        modal.hide();
+    if (task == 'cph7') {
+      httpGetRequest(task, function() {
+        obj = JSON.parse(xmlhttp.responseText);
+        table.rows[1].cells[0].innerHTML = obj[0];
+        table.rows[1].cells[1].innerHTML = obj[1];
+        table.rows[1].cells[2].innerHTML = obj[2];
+        table.rows[1].cells[3].innerHTML = phCalibrStatus[obj[3]];
+      });
+    } else {
+      httpGetRequest(task)
     }
-
-    xmlhttp.open("GET", adr, true);
-    xmlhttp.send();
-    //console.log(adr);
 }
 //********************************************************************************************
 
@@ -534,7 +529,7 @@ function populateTable(table, rows, cells, content) {
     var is_func = (typeof content === 'function');
     if (!table)
         table = document.createElement('table');
-    table.className = "table table-bordered table-striped";
+    table.className = "table table-bordered table-striped table-hover";
     table.id = "taskTable";
 
     var header = table.createTHead();
