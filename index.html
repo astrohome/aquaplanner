@@ -51,11 +51,11 @@
     </div>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">AQUPLANNER NET</a>
-            </div>
-        </div>
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <a class="navbar-brand" href="#">AQUPLANNER NET</a>
+          </div>
+      </div>
     </nav>
 
     <div class="container-fluid">
@@ -83,7 +83,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="usr">URL:</label>
+                                <label for="inURL">URL:</label>
                                 <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://">
                             </div>
                         </div>
@@ -197,28 +197,30 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table id="displTable3" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ДЕНЬ НЕДЕЛИ</th>
-                                        <th>ЧАСЫ</th>
-                                        <th>МИНУТЫ</th>
-                                        <th>ДЕНЬ</th>
-                                        <th>МЕСЯЦ</th>
-                                        <th>ГОД</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="d1"><i class="fa fa-times"></i></td>
-                                        <td id="d2"><i class="fa fa-times"></i></td>
-                                        <td id="d3"><i class="fa fa-times"></i></td>
-                                        <td id="d4"><i class="fa fa-times"></i></td>
-                                        <td id="d5"><i class="fa fa-times"></i></td>
-                                        <td id="d6"><i class="fa fa-times"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table id="displTable3" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ДЕНЬ</th>
+                                            <th>ЧАСЫ</th>
+                                            <th>МИНУТЫ</th>
+                                            <th>ДЕНЬ</th>
+                                            <th>МЕСЯЦ</th>
+                                            <th>ГОД</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="d1"><i class="fa fa-times"></i></td>
+                                            <td id="d2"><i class="fa fa-times"></i></td>
+                                            <td id="d3"><i class="fa fa-times"></i></td>
+                                            <td id="d4"><i class="fa fa-times"></i></td>
+                                            <td id="d5"><i class="fa fa-times"></i></td>
+                                            <td id="d6"><i class="fa fa-times"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-default" id="btnDispl"><i class="fa fa-refresh"></i> Обновить</button>
@@ -238,7 +240,8 @@
                             <h2>Кнопки</h2>
                         </div>
                         <div class="panel-body">
-                            <table class="table table-bordered" id="knobsEditTable">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="knobsEditTable">
                                 <tr>
                                     <th>LED</th>
                                     <th>PЕЛЕ 8</th>
@@ -315,6 +318,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-default" id="btnGetKnobsValues"><i class="fa fa-refresh"></i> Обновить</button> <button type="submit" class="btn btn-primary" id="btnPostKnobsValues" disabled><i class="fa fa-save"></i> Сохранить</button>
@@ -431,28 +435,30 @@
                             <h2>Настройка Даты</h2>
                         </div>
                         <div class="panel-body">
-                            <table class="table table-bordered" id="editDateTable">
-                                <thead>
-                                    <tr>
-                                        <th>ДЕНЬ НЕДЕЛИ</th>
-                                        <th>ЧАСЫ</th>
-                                        <th>МИНУТЫ</th>
-                                        <th>ДЕНЬ</th>
-                                        <th>МЕСЯЦ</th>
-                                        <th>ГОД</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="dat1">&nbsp;</td>
-                                        <td id="dat2">&nbsp;</td>
-                                        <td id="dat3">&nbsp;</td>
-                                        <td id="dat4">&nbsp;</td>
-                                        <td id="dat5">&nbsp;</td>
-                                        <td id="dat6">&nbsp;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="editDateTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ДЕНЬ НЕДЕЛИ</th>
+                                            <th>ЧАСЫ</th>
+                                            <th>МИНУТЫ</th>
+                                            <th>ДЕНЬ</th>
+                                            <th>МЕСЯЦ</th>
+                                            <th>ГОД</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="dat1">&nbsp;</td>
+                                            <td id="dat2">&nbsp;</td>
+                                            <td id="dat3">&nbsp;</td>
+                                            <td id="dat4">&nbsp;</td>
+                                            <td id="dat5">&nbsp;</td>
+                                            <td id="dat6">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             <button id="btnPostDate" type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Сохранить</button>

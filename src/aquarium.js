@@ -198,12 +198,12 @@ function testLedsReq(task) {
 
     switch (task) {
         case "gttb":
-            document.getElementById("endLedTestBtn").disabled = false;
-            document.getElementById("beginLedTestBtn").disabled = true;
+            document.getElementById("btnEndLedTest").disabled = false;
+            document.getElementById("btnStartLedTest").disabled = true;
             break;
         case "gtte":
-            document.getElementById("endLedTestBtn").disabled = true;
-            document.getElementById("beginLedTestBtn").disabled = false;
+            document.getElementById("btnEndLedTest").disabled = true;
+            document.getElementById("btnStartLedTest").disabled = false;
             break;
    }
 
