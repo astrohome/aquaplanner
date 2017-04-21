@@ -73,22 +73,10 @@
                     <li class="nav-header" id="t_6"><a href="#termod"><i class="fa fa-thermometer-half"></i> Настройка Термодатчиков</a></li>
                     <li class="nav-header" id="h_7"><a href="#calibPh"><i class="fa fa-check-circle"></i> Калибровка pH</a></li>
                     <li class="nav-header" id="t_8"><a href="#test"><i class="fa fa-play"></i> Тест Подсветки</a></li>
+                    <li class="nav-header" id="s_9"><a href="#config"><i class="fa fa-cogs"></i> Параметры</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div id="config">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h2>Настройка</h2>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="inURL">URL:</label>
-                                <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://">
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="anchor" id="display">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -178,12 +166,12 @@
                             <table id="displTable2" class="table table-bordered ">
                                 <thead>
                                     <tr>
-                                        <th>LED 1</th>
-                                        <th>LED 2</th>
-                                        <th>LED 3</th>
-                                        <th>LED 4</th>
-                                        <th>LED 5</th>
-                                        <th>LED 6</th>
+                                        <th class="led1Name">LED 1</th>
+                                        <th class="led2Name">LED 2</th>
+                                        <th class="led3Name">LED 3</th>
+                                        <th class="led4Name">LED 4</th>
+                                        <th class="led5Name">LED 5</th>
+                                        <th class="led6Name">LED 6</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -383,12 +371,12 @@
                                                <option value="Р7">Реле 7 (Р7)</option>
                                                <option value="Р8">Реле 8 (Р8)</option>
                                                <option value="ВР">Вентилятор (ВР)</option>
-                                               <option value="С1">Канал LED 1 (С1)</option>
-                                               <option value="С2">Канал LED 2 (С2)</option>
-                                               <option value="С3">Канал LED 3 (С3)</option>
-                                               <option value="С4">Канал LED 4 (С4)</option>
-                                               <option value="С5">Канал LED 5 (С5)</option>
-                                               <option value="С6">Канал LED 6 (С6)</option>
+                                               <option class="led1Name" value="С1">Канал LED 1 (С1)</option>
+                                               <option class="led2Name" value="С2">Канал LED 2 (С2)</option>
+                                               <option class="led3Name" value="С3">Канал LED 3 (С3)</option>
+                                               <option class="led4Name" value="С4">Канал LED 4 (С4)</option>
+                                               <option class="led5Name" value="С5">Канал LED 5 (С5)</option>
+                                               <option class="led6Name" value="С6">Канал LED 6 (С6)</option>
                                             </select>
                                         </td>
                                         <td>
@@ -620,6 +608,46 @@
                                 <span>Чтобы выйти из процесса тестирования подсветки нажмите кнопку Стоп.</span>
                                 <button type="submit" class="btn btn-danger" id="btnEndLedTest" disabled><i class="fa fa-stop"></i> Стоп</button>
                             </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="anchor" id="config">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Параметры</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="inURL">URL:</label>
+                                <input type="url" class="form-control" id="inURL" style="width:100%;" value="http://">
+                            </div>
+                            <div class="form-group">
+                                <label for="led1Name">Название канала LED1:</label>
+                                <input class="form-control" id="led1Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="led2Name">Название канала LED2:</label>
+                                <input class="form-control" id="led2Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="led3Name">Название канала LED3:</label>
+                                <input class="form-control" id="led3Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="led4Name">Название канала LED4:</label>
+                                <input class="form-control" id="led4Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="led5Name">Название канала LED5:</label>
+                                <input class="form-control" id="led5Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="led6Name">Название канала LED6:</label>
+                                <input class="form-control" id="led6Name">
+                            </div>
+                            <div class="form-group">
+                              <button type="submit" class="btn btn-primary" id="btnSaveSettings"><i class="fa fa-save"></i> Сохранить</button>
+                            </div>
                         </div>
                     </div>
                 </div>

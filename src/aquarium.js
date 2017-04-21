@@ -1616,9 +1616,32 @@ function populateSelect(cData) {
     return select;
 }
 
+function readLedNames() {
+  for (var i = 1; i <= 6; i++) {
+    var key = "led" + i + "Name";
+    var name = localStorage.getItem(key);
+    if (name) {
+      $("." + key).text(name);
+      $("#" + key).val(name);
+    }
+  }
+}
+
+function updateLedNames() {
+  for (var i = 1; i <= 6; i++) {
+    var key = "led" + i + "Name";
+    var name = $("#"+ key).val();
+    if (name) {
+      localStorage.setItem(key, name);
+      $("." + key).text(name);
+    }
+  }
+}
+
 $(document).ready(function() {
     document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
     taskTableBtnInit();
+    readLedNames();
     $.material.init();
 
     urlString = localStorage.urlLastName;
@@ -1649,10 +1672,12 @@ $(document).ready(function() {
         editRow('taskTable', taskTableHdr.length, taskTableTxt);
     });
 
-    $('#inURL').keyup(function() {
-        localStorage.urlLastName = this.value;
+    $("#btnSaveSettings").click(function() {
+        localStorage.urlLastName = $('#inURL').val();
         urlString = localStorage.urlLastName;
         adress = urlString + portString;
+
+        updateLedNames();
     });
 
     $("#btnGetKnobsValues").click(function() {
