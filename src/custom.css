@@ -139,13 +139,6 @@ i.fa {
     text-align: center;
 }
 
-i.fa.fa-fan {
-  background: url(../img/ac.svg) no-repeat center left;
-  background-size: 20px 14px;
-  width: 20px;
-  height: 14px;
-}
-
 select.form-control {
     text-align: center;
     text-align-last: center;
