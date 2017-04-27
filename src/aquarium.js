@@ -494,16 +494,17 @@ var NUMBERLINE = _enum({
     BP: 15
 });
 var FUNCTION = _enum({
-    TC: 0,
-    TM: 1,
-    TO: 2,
-    HT: 3,
-    OT: 4,
-    TH: 5,
-    CO: 6,
-    TK: 7,
-    UV: 8
-});
+		TC : 0,
+		TM : 1,
+		TO : 2,
+		HT : 3,
+		OT : 4,
+		TH : 5,
+
+		CO : 7,
+		TK : 8,
+		UV : 9
+	});
 var TASKTABLE = _enum({
     NUMBER: 0,
     FUNCTION: 1,
