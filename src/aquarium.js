@@ -51,6 +51,8 @@ function sendRequest(type, url, data, callback) {
   $.ajax({
       url: url,
       type: type,
+      tryCount : 0,
+      retryLimit : 3,
       contentType: "text/plain;charset=UTF-8",
       data: data,
       dataType: "text",
@@ -61,11 +63,21 @@ function sendRequest(type, url, data, callback) {
             callback($.parseJSON(response));
         modal.hide();
       },
-      error: function(x, t, m) {
+      error: function(xhr, textStatus, errorThrown) {
           modal.hide();
-          if (t === "timeout") {
-              modal.showWithDetails(ERROR, 'errorDetails',
-            'Ответ не получен на протяжении 10 секунд. Проверьте адрес. Проверьте WiFi модуль контроллера.');
+          if (textStatus === "timeout") {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+                //try again
+                $.ajax(this);
+                return;
+            }
+            modal.showWithDetails(ERROR, 'errorDetails',
+          'Ответ не получен на протяжении 10 секунд. Проверьте адрес. Проверьте WiFi модуль контроллера.');
+            return;
+          } else if (xhr.status === 500) {
+            modal.showWithDetails(ERROR, 'errorDetails',
+          'Ошибка контроллера. Перезагрузите контроллер либо обратитесь в техподдержку.');
           } else {
               modal.showWithDetails(ERROR);
           }
