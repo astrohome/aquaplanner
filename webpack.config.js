@@ -20,11 +20,11 @@ module.exports = {
   },
   plugins: [
       new ExtractTextPlugin("styles.css"),
-      new OptimizeCssAssetsPlugin({
+    /*  new OptimizeCssAssetsPlugin({
         cssProcessor: require('cssnano'),
         cssProcessorOptions: { discardComments: {removeAll: true } },
         canPrint: true
-      }),
+      }), */
       new webpack.ProvidePlugin({
           $: "jquery",
           jQuery: "jquery",

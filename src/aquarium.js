@@ -1289,6 +1289,8 @@ function setTaskTable() {
     httpPostRequest(bufferTaskTable, 'stts', true);
 }
 
+var lightTasks = [];
+
 function getTaskTable(dataReceived) {
     var deviceTaskStructByteCount = 15;
     //xmlHttpBinaryRequest('POST',null,messageToReceive,'stts');
@@ -1418,6 +1420,20 @@ function getTaskTable(dataReceived) {
                 newTableTxt[i][TASKTABLE.TRESH] = '';
                 newTableTxt[i][TASKTABLE.TIMEON] = digitToTimeView(dataView.getUint8(DATAOFFSET.timeOnHrs)) + ':' + digitToTimeView(dataView.getUint8(DATAOFFSET.timeOnMin));
                 newTableTxt[i][TASKTABLE.TIMEOFF] = digitToTimeView(dataView.getUint8(DATAOFFSET.timeOffHrs)) + ':' + digitToTimeView(dataView.getUint8(DATAOFFSET.timeOffMin));
+
+                var startMinutes = dataView.getUint8(DATAOFFSET.timeOnHrs) * 60 + dataView.getUint8(DATAOFFSET.timeOnMin);
+                var endMinutes = dataView.getUint8(DATAOFFSET.timeOffHrs) * 60 + dataView.getUint8(DATAOFFSET.timeOffMin);
+
+                var startPWM = newTableTxt[i][TASKTABLE.PWMON];
+                var endPWM = newTableTxt[i][TASKTABLE.PWMOFF];
+
+                if (newTableTxt[i][TASKTABLE.OUT].charAt(0) === 'С') {
+                  ctx.beginPath();
+                  ctx.moveTo(leftMargin + width/(24*60) * startMinutes, topMargin + height - startPWM * (height / 100));
+                  ctx.lineTo(leftMargin + width/(24*60) * endMinutes, topMargin + height - endPWM * (height / 100));
+                  ctx.stroke();
+                }
+
                 break;
             case FUNCTION.HT:
                 newTableTxt[i][TASKTABLE.FUNCTION] = 'НТ';
@@ -1651,11 +1667,67 @@ function updateLedNames() {
   }
 }
 
+var c, ctx, height, width, leftMargin = 20, rightMargin = 20, bottomMargin = 20, topMargin = 20;
+
 $(document).ready(function() {
     document.getElementById("mainTaskTable").appendChild(populateTable(null, taskTableTxt.length, taskTableHdr.length, taskTableTxt));
     taskTableBtnInit();
     readLedNames();
     $.material.init();
+
+    c = document.getElementById("example");
+    height = c.height;
+    width = c.width;
+    ctx = c.getContext("2d");
+    height = height - bottomMargin - topMargin;
+    width = width - leftMargin - rightMargin;
+
+    ctx.font="12px Roboto";
+
+    ctx.beginPath();
+    ctx.moveTo(leftMargin, topMargin + height);
+    ctx.lineTo(width + leftMargin, topMargin + height);
+    ctx.stroke();
+
+    for (var i = 0; i < 24; i++) {
+      var left = leftMargin + i * (width / 23);
+      var top = topMargin + height;
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      ctx.moveTo(left, top + 5);
+      ctx.lineTo(left, top - 5);
+      ctx.stroke();
+      ctx.fillText(digitToTimeView(i), left - 7, top + 15);
+
+      ctx.setLineDash([1,2]);
+      ctx.beginPath();
+      ctx.moveTo(left, top);
+      ctx.lineTo(left, topMargin);
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([]);
+
+    ctx.beginPath();
+    ctx.moveTo(leftMargin, topMargin);
+    ctx.lineTo(leftMargin, height + topMargin);
+    ctx.stroke();
+
+    for (var x = 0; x <= 100; x += 10) {
+      ctx.beginPath();
+      ctx.moveTo(leftMargin - 5, topMargin + x * (height / 100));
+      ctx.lineTo(leftMargin + 5, topMargin + x * (height / 100));
+      ctx.stroke();
+      ctx.fillText(digitToTimeView(100 - x), 0, topMargin + x * (height / 100));
+
+      ctx.setLineDash([1,2]);
+      ctx.beginPath();
+      ctx.moveTo(leftMargin, topMargin + x * (height / 100));
+      ctx.lineTo(leftMargin + width, topMargin + x * (height / 100));
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([]);
 
     urlString = localStorage.urlLastName;
     if (urlString !== undefined) {
